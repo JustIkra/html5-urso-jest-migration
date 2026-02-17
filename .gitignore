@@ -16,3 +16,9 @@ jsconfig.json
 /docs
 /yarn.lock
 # server.js
+
+coverage
+urso-examples-dev
+.memory-base
+.claude
+CLAUDE.md
