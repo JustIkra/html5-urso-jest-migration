@@ -1,0 +1,13 @@
+node_modules
+urso-examples-dev/node_modules
+build
+dist
+coverage
+.DS_Store
+.idea
+.vscode
+.claude
+.git
+*.code-workspace
+docs
+test

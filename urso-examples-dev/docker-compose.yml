@@ -1,0 +1,14 @@
+services:
+  examples:
+    build:
+      context: ..
+      dockerfile: urso-examples-dev/Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      # Hot-reload: mount TS core source and examples source
+      - ../src/ts:/app/src/ts
+      - ./src:/app/urso-examples-dev/src
+      - ./public:/app/urso-examples-dev/public
+      - ./index.html:/app/urso-examples-dev/index.html
+      - ./vite.config.ts:/app/urso-examples-dev/vite.config.ts
