@@ -21,12 +21,7 @@ COPY urso-examples-dev/index.html urso-examples-dev/vite.config.ts ./
 COPY urso-examples-dev/assets.config.json ./
 COPY urso-examples-dev/src/ ./src/
 
-# Recreate symlinks (COPY follows symlinks and copies broken refs)
-RUN rm -rf public && mkdir -p public \
-    && ln -s ../src/assets public/assets \
-    && ln -s ../src/bin public/bin \
-    && ln -s ../src/favicon.ico public/favicon.ico
-
+# No symlinks needed — vite.config.ts serves src/assets and src/bin via plugin
 # file:.. resolves to /app — where @urso/core is installed
 RUN npm install
 
