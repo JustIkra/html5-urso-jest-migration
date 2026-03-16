@@ -252,7 +252,7 @@ class ModulesObjectsModelsSlider extends ModulesObjectsBaseModel {
       name: this.name,
       position: (this._sliderHandle as Record<string, unknown>)[this.positionKey],
     };
-    this.emit(Urso.events.MODULES_OBJECTS_SLIDER_HANDLE_MOVE as string, data);
+    this.emit(Urso.events.MODULES_OBJECTS_SLIDER_HANDLE_MOVE, data);
   }
 
   private _onPointerUp(obj: PointerEvent): void {
@@ -304,7 +304,7 @@ class ModulesObjectsModelsSlider extends ModulesObjectsBaseModel {
       value: value,
     };
 
-    this.emit(Urso.events.MODULES_OBJECTS_SLIDER_HANDLE_DROP as string, data);
+    this.emit(Urso.events.MODULES_OBJECTS_SLIDER_HANDLE_DROP, data);
     this._setNewValue(coord, value);
   }
 
@@ -356,7 +356,7 @@ class ModulesObjectsModelsSlider extends ModulesObjectsBaseModel {
 
   public _subscribeOnce(): void {
     this.addListener(
-      Urso.events.MODULES_SCENES_MOUSE_NEW_POSITION as string,
+      Urso.events.MODULES_SCENES_MOUSE_NEW_POSITION,
       this._onPointerMove.bind(this) as ObserverCallback,
     );
   }

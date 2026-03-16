@@ -25,7 +25,7 @@ class ModulesObjectsModelsToggle extends ModulesObjectsModelsButton {
     super.setupParams(params);
 
     this.action = Urso.helper.recursiveGet('action', params, () => {
-      this.emit(Urso.events.MODULES_OBJECTS_TOGGLE_PRESS as string, {
+      this.emit(Urso.events.MODULES_OBJECTS_TOGGLE_PRESS, {
         name: this.name,
         status: this.status,
         class: this['class'],

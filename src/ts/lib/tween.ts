@@ -65,7 +65,7 @@ class LibTween {
   private _tweenIndex: number = 0;
 
   public get globalTimeScale(): number {
-    return (Urso.scenes as Record<string, unknown>).timeScale as number;
+    return Urso.scenes.timeScale;
   }
 
   constructor() {

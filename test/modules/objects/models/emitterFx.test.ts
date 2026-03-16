@@ -44,7 +44,7 @@ describe('ModulesObjectsModelsEmitterFx', () => {
 
   it('should default spritesheetFilter to null', () => {
     const sut = new ModulesObjectsModelsEmitterFx({ cfg: 'fx_config' } as Record<string, unknown>);
-    expect(sut.spritesheetFilter).toBeNull();
+    expect(sut.spritesheetFilter).toBeNoValue();
   });
 
   it('should call cache.getJson with cfg key', () => {

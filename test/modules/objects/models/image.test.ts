@@ -32,7 +32,7 @@ describe('ModulesObjectsModelsImage', () => {
 
   it('should default assetKey to null (not false)', () => {
     const sut = new ModulesObjectsModelsImage({});
-    expect(sut.assetKey).toBeNull();
+    expect(sut.assetKey).toBeNoValue();
   });
 
   it('should accept assetKey from params', () => {

@@ -1,9 +1,12 @@
 import ModulesObjectsModelsComponent from '../../../../src/ts/modules/objects/models/component';
+import type { ObjectModelParams } from '../../../../src/ts/types';
 import { ObjectTypeId } from '../../../../src/ts/types';
 import { Container } from 'pixi.js';
 
 describe('ModulesObjectsModelsComponent', () => {
   let mockUrso: ReturnType<typeof createMockUrso>;
+  // JS _setupFind crashes if _controller is falsy (no guard) — provide a default mock
+  let defaultController: Record<string, unknown>;
 
   beforeEach(() => {
     mockUrso = createMockUrso();
@@ -14,46 +17,53 @@ describe('ModulesObjectsModelsComponent', () => {
       },
     );
     (globalThis as Record<string, unknown>).Urso = mockUrso;
+    defaultController = {
+      common: { find: null, findOne: null, findAll: null, object: null },
+    };
   });
 
+  function createComponent(overrides: Record<string, unknown> = {}): ModulesObjectsModelsComponent {
+    return new ModulesObjectsModelsComponent({ _controller: defaultController, ...overrides } as unknown as Partial<ObjectModelParams>);
+  }
+
   it('should set type to COMPONENT', () => {
-    const sut = new ModulesObjectsModelsComponent({});
+    const sut = createComponent();
     expect(sut.type).toBe(ObjectTypeId.COMPONENT);
   });
 
   it('should create a PIXI Container as _baseObject', () => {
-    const sut = new ModulesObjectsModelsComponent({});
+    const sut = createComponent();
     expect(sut._baseObject).toBeInstanceOf(Container);
   });
 
   it('should default componentName to null', () => {
-    const sut = new ModulesObjectsModelsComponent({});
-    expect(sut.componentName).toBeNull();
+    const sut = createComponent();
+    expect(sut.componentName).toBeNoValue();
   });
 
   it('should default options to null', () => {
-    const sut = new ModulesObjectsModelsComponent({});
-    expect(sut.options).toBeNull();
+    const sut = createComponent();
+    expect(sut.options).toBeNoValue();
   });
 
   it('should default contents to empty array', () => {
-    const sut = new ModulesObjectsModelsComponent({});
+    const sut = createComponent();
     expect(sut.contents).toEqual([]);
   });
 
   it('should auto-generate name when none provided', () => {
-    const sut = new ModulesObjectsModelsComponent({});
+    const sut = createComponent();
     expect(sut.name).toMatch(/^component_/);
   });
 
   it('should keep user-provided name', () => {
-    const sut = new ModulesObjectsModelsComponent({ name: 'myComp' } as Record<string, unknown>);
+    const sut = createComponent({ name: 'myComp' });
     expect(sut.name).toBe('myComp');
   });
 
-  it('should set instance to null when no _controller', () => {
-    const sut = new ModulesObjectsModelsComponent({});
-    expect(sut.instance).toBeNull();
+  it('should set instance to controller when _controller given', () => {
+    const sut = createComponent();
+    expect(sut.instance).toBe(defaultController);
   });
 
   it('should wire find/findOne/findAll on instance.common when _controller given', () => {

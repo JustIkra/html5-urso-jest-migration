@@ -1,9 +1,5 @@
 import ComponentsBaseController from '../base/controller';
 
-declare const Urso: {
-  helper: { logicBlocksDo: (ctx: unknown, method: string) => void };
-};
-
 interface DebugObject {
   visible: boolean;
 }

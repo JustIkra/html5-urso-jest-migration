@@ -51,7 +51,7 @@ class ModulesObjectsModelsHitArea extends ModulesObjectsBaseModel {
 
     this.action = Urso.helper.recursiveGet(
       'action', params, (position: { x: number; y: number }) => {
-        this.emit(Urso.events.MODULES_OBJECTS_HIT_AREA_PRESS as string, { position, name: this.name, class: this['class'] });
+        this.emit(Urso.events.MODULES_OBJECTS_HIT_AREA_PRESS, { position, name: this.name, class: this['class'] });
       },
     ) as (position: { x: number; y: number }) => void;
     this.disableRightClick = Urso.helper.recursiveGet('disableRightClick', params, false) as boolean;

@@ -12,11 +12,6 @@ interface DecoratorFacade {
   toFront: (message: unknown) => TransportMessage | null;
 }
 
-declare const Urso: {
-  helper: { capitaliseFirstLetter: (s: string) => string };
-  logger: { error: (...args: unknown[]) => void };
-};
-
 class ModulesTransportService {
   private _callbacks: TransportCallbackMap = {};
   private _config: TransportConfig;

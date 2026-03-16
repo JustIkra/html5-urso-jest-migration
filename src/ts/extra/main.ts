@@ -1,10 +1,6 @@
-declare const PIXI: {
-  ExtensionType: { LoadParser: string };
-  extensions: { add: (ext: unknown) => void };
-};
-declare const gsap: unknown;
-declare const Howler: unknown;
-declare const Howl: unknown;
+import * as PIXI from 'pixi.js';
+import { gsap } from 'gsap';
+import { Howler, Howl } from 'howler';
 
 interface SoundAssetLoader {
   extension: {

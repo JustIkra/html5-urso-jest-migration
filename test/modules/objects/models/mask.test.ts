@@ -28,8 +28,8 @@ describe('ModulesObjectsModelsMask', () => {
 
   it('should default rectangle and rectangles to null (not false)', () => {
     const sut = new ModulesObjectsModelsMask({});
-    expect(sut.rectangle).toBeNull();
-    expect(sut.rectangles).toBeNull();
+    expect(sut.rectangle).toBeNoValue();
+    expect(sut.rectangles).toBeNoValue();
   });
 
   it('should draw single rectangle when provided', () => {

@@ -1,20 +1,5 @@
 import ComponentsBaseController from '../base/controller';
 
-declare const Urso: {
-  events: Record<string, string>;
-  logger: { error: (...args: unknown[]) => void };
-  statesManager: {
-    setStateGuard: (key: string, guard: () => boolean) => void;
-    addActionRun: (key: string, run: (finish: () => void) => void) => void;
-    addActionTerminate: (key: string, terminate: () => void) => void;
-    addActionGuard: (key: string, guard: () => boolean) => void;
-    removeStateGuard: (key: string, guard: () => boolean) => void;
-    removeActionRun: (key: string, run: (finish: () => void) => void) => void;
-    removeActionTerminate: (key: string, terminate: () => void) => void;
-    removeActionGuard: (key: string, guard: () => boolean) => void;
-  };
-};
-
 interface StateConfig {
   guard: () => boolean;
 }

@@ -151,7 +151,7 @@ class ModulesObjectsModelsText extends ModulesObjectsBaseModel {
   protected _customDestroy(): void {
     if (this.localeId) {
       this.removeListener(
-        Urso.events.MODULES_I18N_NEW_LOCALE_WAS_SET as string,
+        Urso.events.MODULES_I18N_NEW_LOCALE_WAS_SET,
         this._newLocaleHandler.bind(this) as ObserverCallback,
       );
     }
@@ -160,7 +160,7 @@ class ModulesObjectsModelsText extends ModulesObjectsBaseModel {
   public _subscribeOnce(): void {
     if (this.localeId) {
       this.addListener(
-        Urso.events.MODULES_I18N_NEW_LOCALE_WAS_SET as string,
+        Urso.events.MODULES_I18N_NEW_LOCALE_WAS_SET,
         this._newLocaleHandler.bind(this) as ObserverCallback,
       );
     }

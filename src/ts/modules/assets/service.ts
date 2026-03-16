@@ -158,7 +158,7 @@ class ModulesAssetsService {
       return;
     }
 
-    const loader = this.getInstance<LoaderInstance>('Lib.Loader');
+    const loader = Urso.getInstance('Lib.Loader') as LoaderInstance;
 
     for (const assetModel of atlases) {
       this._addAssetToLoader(assetModel, loader);
@@ -179,7 +179,7 @@ class ModulesAssetsService {
     callback: () => void,
     updateCallback: (progress: number) => void,
   ): void {
-    const loader = this.getInstance<LoaderInstance>('Lib.Loader');
+    const loader = Urso.getInstance('Lib.Loader') as LoaderInstance;
     loader.setOnLoadUpdate((params: { progress: number }) => {
       updateCallback(Math.floor(params.progress));
     });
@@ -215,7 +215,7 @@ class ModulesAssetsService {
       return;
     }
 
-    const loader = this.getInstance<LoaderInstance>('Lib.Loader');
+    const loader = Urso.getInstance('Lib.Loader') as LoaderInstance;
 
     for (const assetModel of noAtlasSpines) {
       this._addAssetToLoader(assetModel, loader);

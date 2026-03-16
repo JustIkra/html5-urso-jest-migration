@@ -6,6 +6,11 @@ describe('LibLoader', () => {
 
   beforeEach(() => {
     sut = new LibLoader();
+    // JS source uses Urso.cache.getJsonAtlases() directly
+    const mockUrso = (globalThis as Record<string, unknown>).Urso as Record<string, Record<string, unknown>>;
+    if (mockUrso && mockUrso.cache && !mockUrso.cache.getJsonAtlases) {
+      mockUrso.cache.getJsonAtlases = vi.fn(() => ({}));
+    }
   });
 
   // ==========================================================================
@@ -156,31 +161,31 @@ describe('LibLoader', () => {
     it('should store loaded atlas in cache', async () => {
       sut.addAsset({ type: AssetTypeId.ATLAS, key: 'atlas1', path: 'http://x.com/atlas.json' });
       await sut.start(vi.fn());
-      expect((Urso.cache as Record<string, unknown>).addAtlas).toHaveBeenCalled();
+      expect(Urso.cache.addAtlas).toHaveBeenCalled();
     });
 
     it('should store loaded image texture in cache', async () => {
       sut.addAsset({ type: AssetTypeId.IMAGE, key: 'img1', path: 'http://x.com/img.png' });
       await sut.start(vi.fn());
-      expect((Urso.cache as Record<string, unknown>).addTexture).toHaveBeenCalled();
+      expect(Urso.cache.addTexture).toHaveBeenCalled();
     });
 
     it('should store loaded JSON in cache', async () => {
       sut.addAsset({ type: AssetTypeId.JSON, key: 'json1', path: 'http://x.com/data.json' });
       await sut.start(vi.fn());
-      expect((Urso.cache as Record<string, unknown>).addJson).toHaveBeenCalled();
+      expect(Urso.cache.addJson).toHaveBeenCalled();
     });
 
     it('should store loaded sound in cache', async () => {
       sut.addAsset({ type: AssetTypeId.SOUND, key: 'snd1', path: 'http://x.com/snd.mp3' });
       await sut.start(vi.fn());
-      expect((Urso.cache as Record<string, unknown>).addSound).toHaveBeenCalled();
+      expect(Urso.cache.addSound).toHaveBeenCalled();
     });
 
     it('should store loaded spine in cache', async () => {
       sut.addAsset({ type: AssetTypeId.SPINE, key: 'sp1', path: 'http://x.com/spine.json' });
       await sut.start(vi.fn());
-      expect((Urso.cache as Record<string, unknown>).addSpine).toHaveBeenCalled();
+      expect(Urso.cache.addSpine).toHaveBeenCalled();
     });
   });
 });

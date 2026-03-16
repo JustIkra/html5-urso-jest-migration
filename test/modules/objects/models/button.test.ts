@@ -40,17 +40,17 @@ describe('ModulesObjectsModelsButton', () => {
 
   it('should default keyDownAction to null', () => {
     const sut = new ModulesObjectsModelsButton({});
-    expect(sut.keyDownAction).toBeNull();
+    expect(sut.keyDownAction).toBeNoValue();
   });
 
   it('should default mouseOverAction to null', () => {
     const sut = new ModulesObjectsModelsButton({});
-    expect(sut.mouseOverAction).toBeNull();
+    expect(sut.mouseOverAction).toBeNoValue();
   });
 
   it('should default mouseOutAction to null', () => {
     const sut = new ModulesObjectsModelsButton({});
-    expect(sut.mouseOutAction).toBeNull();
+    expect(sut.mouseOutAction).toBeNoValue();
   });
 
   it('should default handlePointerUpOutside to true', () => {
@@ -60,10 +60,10 @@ describe('ModulesObjectsModelsButton', () => {
 
   it('should default all buttonFrames to null', () => {
     const sut = new ModulesObjectsModelsButton({});
-    expect(sut.buttonFrames.over).toBeNull();
-    expect(sut.buttonFrames.out).toBeNull();
-    expect(sut.buttonFrames.pressed).toBeNull();
-    expect(sut.buttonFrames.disabled).toBeNull();
+    expect(sut.buttonFrames.over).toBeNoValue();
+    expect(sut.buttonFrames.out).toBeNoValue();
+    expect(sut.buttonFrames.pressed).toBeNoValue();
+    expect(sut.buttonFrames.disabled).toBeNoValue();
   });
 
   it('should register pointer events on baseObject', () => {

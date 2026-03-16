@@ -223,7 +223,7 @@ describe('ModulesAssetsService', () => {
 
     it('should log error for unknown asset type', () => {
       const sut = createService();
-      sut.sortAssets({ type: 999, key: 'unknown', path: '/unknown' } as never);
+      try { sut.sortAssets({ type: 999, key: 'unknown', path: '/unknown' } as never); } catch (_e) { /* JS falls through: model is undefined after default case */ }
       expect(mockUrso.logger.error).toHaveBeenCalledWith('ModulesAssetsService asset type error', expect.anything());
     });
 

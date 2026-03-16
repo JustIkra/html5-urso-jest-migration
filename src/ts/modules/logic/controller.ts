@@ -1,9 +1,5 @@
 import type { UrsoInstance } from '../../types';
 
-declare const Urso: {
-  helper: { capitaliseFirstLetter: (s: string) => string };
-};
-
 interface LogicBlockInstance {
   [methodName: string]: ((...args: unknown[]) => unknown) | unknown;
 }

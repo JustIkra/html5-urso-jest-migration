@@ -189,9 +189,18 @@ export interface ComponentCommon {
 }
 
 export interface UrsoInstance {
-  addListener: (event: string, callback: ObserverCallback, isGlobal?: boolean) => void;
-  removeListener: (event: string, callback: ObserverCallback, isGlobal?: boolean) => void;
-  emit: (event: string, params?: unknown, delay?: number) => void;
+  addListener: {
+    <E extends UrsoEvent>(event: E, callback: TypedObserverCallback<E>, isGlobal?: boolean): void;
+    (event: string, callback: ObserverCallback, isGlobal?: boolean): void;
+  };
+  removeListener: {
+    <E extends UrsoEvent>(event: E, callback: TypedObserverCallback<E>, isGlobal?: boolean): void;
+    (event: string, callback: ObserverCallback, isGlobal?: boolean): void;
+  };
+  emit: {
+    <E extends UrsoEvent>(event: E, params?: EventPayloadMap[E], delay?: number): void;
+    (event: string, params?: unknown, delay?: number): void;
+  };
   common: ComponentCommon;
   getInstance: <T = unknown>(path: string, ...args: unknown[]) => T;
   getByPath: <T = unknown>(path: string) => T;
@@ -376,7 +385,7 @@ export interface TemplateModel {
   styles: StylesMap;
   assets: Partial<AssetModelParams>[];
   objects: Partial<ObjectModelParams>[];
-  components: string[];
+  components: unknown[];
   _templatePath: string | null;
 }
 
@@ -601,3 +610,388 @@ export interface StylesCacheEntry {
 }
 
 export type StylesCache = Record<string, StylesCacheEntry>;
+
+// =============================================================================
+// EVENT PAYLOAD TYPES
+// =============================================================================
+
+export interface ButtonPressPayload {
+  name: string | null;
+  class: string | null;
+}
+
+export interface HitAreaPressPayload {
+  position: Point;
+  name: string | null;
+  class: string | null;
+}
+
+export interface SliderHandleMovePayload {
+  class: string | null;
+  name: string | null;
+  position: number;
+}
+
+export interface SliderHandleDropPayload {
+  class: string | null;
+  name: string | null;
+  position: number;
+  value: number;
+}
+
+export interface SpineEventPayload {
+  eventName: string;
+  name: string | null;
+  class: string | null;
+}
+
+export interface TogglePressPayload {
+  name: string | null;
+  status: boolean;
+  class: string | null;
+}
+
+export interface CheckboxPressPayload {
+  name: string | null;
+  status: boolean;
+  class: string | null;
+}
+
+export interface SceneResolutionPayload {
+  resolution: unknown;
+  template: { orientation: string; width: number; height: number };
+}
+
+// =============================================================================
+// EVENT PAYLOAD MAP
+// =============================================================================
+
+export interface EventPayloadMap {
+  [UrsoEvent.COMPONENTS_FULLSCREEN_CHANGE]: boolean;
+  [UrsoEvent.COMPONENTS_FULLSCREEN_SWITCH]: unknown;
+  [UrsoEvent.COMPONENTS_LAYERS_SWITCHER_SWITCH]: unknown;
+  [UrsoEvent.EXTRA_BROWSEREVENTS_KEYPRESS_EVENT]: KeyboardEvent;
+  [UrsoEvent.EXTRA_BROWSEREVENTS_POINTER_EVENT]: Event;
+  [UrsoEvent.EXTRA_BROWSEREVENTS_WINDOW_PRE_RESIZE]: undefined;
+  [UrsoEvent.EXTRA_BROWSEREVENTS_WINDOW_RESIZE]: undefined;
+  [UrsoEvent.EXTRA_BROWSEREVENTS_WINDOW_VISIBILITYCHANGE]: string;
+  [UrsoEvent.MODULES_ASSETS_GROUP_LOADED]: string;
+  [UrsoEvent.MODULES_ASSETS_LOAD_PROGRESS]: number;
+  [UrsoEvent.MODULES_ASSETS_LAZYLOAD_FINISHED]: undefined;
+  [UrsoEvent.MODULES_I18N_NEW_LOCALE_WAS_SET]: string;
+  [UrsoEvent.MODULES_INSTANCES_MODES_CHANGED]: undefined;
+  [UrsoEvent.MODULES_OBJECTS_BUTTON_PRESS]: ButtonPressPayload;
+  [UrsoEvent.MODULES_OBJECTS_HIT_AREA_PRESS]: HitAreaPressPayload;
+  [UrsoEvent.MODULES_OBJECTS_SLIDER_HANDLE_MOVE]: SliderHandleMovePayload;
+  [UrsoEvent.MODULES_OBJECTS_SLIDER_HANDLE_DROP]: SliderHandleDropPayload;
+  [UrsoEvent.MODULES_OBJECTS_SPINE_EVENT]: SpineEventPayload;
+  [UrsoEvent.MODULES_OBJECTS_TOGGLE_PRESS]: TogglePressPayload;
+  [UrsoEvent.MODULES_OBJECTS_TEXTINPUT_BLUR]: unknown;
+  [UrsoEvent.MODULES_OBJECTS_TEXTINPUT_INPUT]: unknown;
+  [UrsoEvent.MODULES_OBJECTS_CHECKBOX_PRESS]: CheckboxPressPayload;
+  [UrsoEvent.MODULES_LOGIC_SOUNDS_DO]: SoundDoCommand;
+  [UrsoEvent.MODULES_SOUND_MANAGER_CONTEXT_UNLOCKED]: undefined;
+  [UrsoEvent.MODULES_SOUND_MANAGER_UPDATE_CFG]: SoundsCfgData;
+  [UrsoEvent.MODULES_SOUND_MANAGER_SET_GLOBAL_VOLUME]: number;
+  [UrsoEvent.MODULES_STATES_MANAGER_STATE_CHANGE]: string;
+  [UrsoEvent.MODULES_STATES_MANAGER_ACTION_START]: string;
+  [UrsoEvent.MODULES_STATES_MANAGER_ACTION_FINISH]: string;
+  [UrsoEvent.MODULES_STATES_MANAGER_STOP]: undefined;
+  [UrsoEvent.MODULES_SCENES_ORIENTATION_CHANGE]: string;
+  [UrsoEvent.MODULES_SCENES_NEW_RESOLUTION]: SceneResolutionPayload;
+  [UrsoEvent.MODULES_SCENES_NEW_SCENE_INIT]: string;
+  [UrsoEvent.MODULES_SCENES_DISPLAY_START]: string;
+  [UrsoEvent.MODULES_SCENES_DISPLAY_FINISHED]: undefined;
+  [UrsoEvent.MODULES_SCENES_MOUSE_NEW_POSITION]: Point;
+  [UrsoEvent.MODULES_SCENES_PAUSE]: undefined;
+  [UrsoEvent.MODULES_SCENES_RESUME]: undefined;
+  [UrsoEvent.MODULES_SCENES_UPDATE]: number;
+}
+
+export type TypedObserverCallback<E extends UrsoEvent> =
+  EventPayloadMap[E] extends undefined
+    ? () => void
+    : (payload: EventPayloadMap[E]) => void;
+
+// =============================================================================
+// CONFIG
+// =============================================================================
+
+export interface FpsConfig {
+  limit: number;
+  optimizeLowPerformance: boolean;
+}
+
+export interface ConfigMainType {
+  title: string;
+  appVersion: number;
+  mode: string;
+  defaultLogLevel: string;
+  extendingChain: string[];
+  defaultScene: string;
+  gamePath: string;
+  useBinPath: boolean;
+  useTransport: boolean;
+  fps: FpsConfig;
+  gameContainerSelector?: string;
+}
+
+// =============================================================================
+// LOADER ASSET
+// =============================================================================
+
+export interface LoaderAsset {
+  type: AssetTypeId;
+  key: string;
+  path: string;
+  params?: Record<string, unknown>;
+}
+
+// =============================================================================
+// LIB FACADES
+// =============================================================================
+
+export interface LibCacheFacade {
+  assetsList: Record<string, Record<string, unknown>>;
+  clearGlobalAtlas(): void;
+  readonly globalAtlas: unknown;
+  getGlobalAtlas(): unknown;
+  addFile(key: string, data: unknown): void;
+  addAtlas(key: string, data: unknown): void;
+  addBinary(key: string, data: unknown): void;
+  addBitmapFont(key: string, data: unknown): void;
+  addContainer(key: string, data: unknown): void;
+  addImage(key: string, data: unknown): void;
+  addJson(key: string, data: unknown): void;
+  addJsonAtlas(key: string, data: unknown): void;
+  addSound(key: string, data: unknown): void;
+  addTexture(key: string, data: unknown): void;
+  addSpine(key: string, data: unknown): void;
+  addSpineAtlas(key: string, data: unknown): void;
+  getFile(key: string): unknown;
+  getAtlas(key: string): unknown;
+  getBinary(key: string): unknown;
+  getBitmapFont(key: string): unknown;
+  getContainer(key: string): unknown;
+  getImage(key: string): unknown;
+  getJson(key: string): unknown;
+  getJsonAtlas(key: string): unknown;
+  getJsonAtlases(): Record<string, unknown>;
+  getSound(key: string): unknown;
+  getSpine(key: string): unknown;
+  getSpineAtlas(key: string): unknown;
+  getTexture(key: string): unknown;
+}
+
+export interface TweenCallbackGroup {
+  addOnce(f: () => void): TweenInstanceFacade;
+  add(f: () => void): TweenInstanceFacade;
+}
+
+export interface TweenInstanceFacade {
+  id: string;
+  isRunning: boolean;
+  enableUpdate: boolean;
+  target: Record<string, number>;
+  to(propsTo: Record<string, number>, duration: number, easing?: (t: number) => number, autostart?: boolean, startDelay?: number): TweenInstanceFacade;
+  start(): TweenInstanceFacade;
+  pause(): TweenInstanceFacade;
+  resume(): TweenInstanceFacade;
+  stop(): TweenInstanceFacade;
+  timeScale: number;
+  onComplete: TweenCallbackGroup;
+  onStart: TweenCallbackGroup;
+  onUpdateCallback(f: (tween: TweenInstanceFacade, progress: number, data: { percent: number; vEnd: Record<string, number> }) => void): TweenInstanceFacade;
+}
+
+export interface LibTweenFacade {
+  tweens: Record<string, TweenInstanceFacade>;
+  gamePaused: boolean;
+  readonly globalTimeScale: number;
+  update(): void;
+  removeAll(): void;
+  add(object: Record<string, number>): TweenInstanceFacade;
+}
+
+export interface LibLoaderFacade {
+  readonly RELOAD_DELAY: number;
+  isRunning(): boolean;
+  addAsset(asset: LoaderAsset): void;
+  start(callback: () => void | Promise<void>): Promise<false | void>;
+  setOnLoadUpdate(onLoadUpdate: ((progress: { progress: number }) => void) | null): void;
+}
+
+// =============================================================================
+// MODULE FACADES
+// =============================================================================
+
+export interface ObjectsControllerFacade {
+  create(objects: unknown, parent?: unknown, doNotRefreshStylesFlag?: boolean): unknown;
+  find(selector: string): ObjectBaseModel[] | null;
+  findOne(selector: string): ObjectBaseModel | null;
+  findAll(selector: string): ObjectBaseModel[];
+  destroy(object: unknown, doNotRefreshStylesFlag?: boolean): void;
+  addChild(parent: unknown, child: unknown, doNotRefreshStylesFlag?: boolean): void;
+  removeChild(parent: unknown, child: unknown, doNotRefreshStylesFlag?: boolean): void;
+  refreshStyles(parent?: unknown): void;
+  refreshByChangedClassName(className: string): void;
+  getWorld(): unknown;
+  addIdToCache(id: string, object: unknown): void;
+  removeIdFromCache(id: string, object: unknown): void;
+  addNameToCache(name: string, object: unknown): void;
+  removeNameFromCache(name: string, object: unknown): void;
+  addClassToCache(className: string, object: unknown): void;
+  removeClassFromCache(className: string, object: unknown): void;
+  /** @internal */
+  _safeSetValueToTarget(target: unknown, key: string, value: unknown): void;
+  /** @internal */
+  _updateCommonProperties(object: unknown): void;
+}
+
+export interface ScenesControllerFacade {
+  init(): Promise<void>;
+  display(name: string): void;
+  getFps(): number;
+  getFpsData(): { fps: number; limit: number };
+  pause(): void;
+  resume(): void;
+  loadUpdate(loadProgress: number): void;
+  getPixiWorld(): unknown;
+  getTemplateSize(): { orientation: string; width: number; height: number };
+  getMouseCoords(): Point;
+  addObject(objects: unknown, parent?: unknown, doNotRefreshStylesFlag?: boolean): unknown | null;
+  generateTexture(obj: unknown): unknown;
+  getRenderer(): unknown;
+  timeScale: number;
+}
+
+export interface TemplateControllerFacade {
+  get(): TemplateModel;
+  scene(name: string): TemplateModel | null;
+  group(name: string): TemplateModel | null;
+  parse(template: unknown, additionalTemplateFlag?: boolean): TemplateModel;
+}
+
+export interface AssetsControllerFacade {
+  updateQuality(): void;
+  getQuality(): string;
+  getCurrentResolution(): number;
+  preload(assets: unknown, callback: () => void, updateCallback?: (progress: number) => void): void;
+  loadGroup(name: string | number, callback: () => void, updateCallback?: (progress: number) => void): void;
+  checkWebPSupport(): void;
+  preloadAllImagesInGPU(): void;
+}
+
+export interface StatesManagerControllerFacade {
+  start(): void;
+  restart(): void;
+  stop(): void;
+  pause(): void;
+  resume(): void;
+  setForceNextState(stateKey: string): void;
+  addActionGuard(key: string, guard: GuardFunction): void;
+  checkActionGuard(key: string): boolean;
+  removeActionGuard(key: string, guard: GuardFunction): void;
+  addActionRun(key: string, runFunction: RunFunction): void;
+  runAction(key: string, onFinishCallback: () => void): void;
+  removeActionRun(key: string, runFunction: RunFunction): void;
+  addActionTerminate(key: string, terminateFunction: TerminateFunction): void;
+  terminateAction(key: string): void;
+  removeActionTerminate(key: string, terminateFunction: TerminateFunction): void;
+  setStateGuard(key: string, guard: GuardFunction): void;
+  checkStateGuard(key: string): boolean;
+  removeStateGuard(key: string, guard: GuardFunction): void;
+}
+
+export interface TransportControllerFacade {
+  init(): void;
+  setOnConnectionHandler(handler: (data?: unknown) => void): void;
+  setReadyHandler(handler: (data?: unknown) => void): void;
+  setErrorHandler(handler: (data?: unknown) => void): void;
+  setResponseHandler(handler: (data?: unknown) => void): void;
+  setOnCloseHandler(handler: (data?: unknown) => void): void;
+  send(message: TransportMessage): void;
+  reconnect(): void;
+  close(): void;
+}
+
+export interface SoundManagerControllerFacade {
+  readonly singleton: boolean;
+}
+
+export interface I18nControllerFacade {
+  get(localeId: string, localeVariables?: Record<string, unknown>): string;
+  setLocale(localeKey: string): void;
+  loadAndSetLocale(localeKey: string, pathToLocaleJson?: string): void;
+}
+
+export interface LogicControllerFacade {
+  logicBlocks: string[];
+  do(...args: unknown[]): Record<string, unknown>;
+}
+
+export interface BrowserEventsFacade {
+  readonly singleton: boolean;
+  RESIZE_DELAY: number;
+  resizeHandler(): void;
+  visibilitychangeHandler(): void;
+}
+
+// =============================================================================
+// GLOBAL LIBRARY TYPES
+// =============================================================================
+
+export interface GsapTween {
+  kill(): void;
+  ratio: number;
+}
+
+export interface GsapGlobal {
+  delayedCall(delay: number, callback: () => void): GsapTween;
+  globalTimeline: { timeScale(v: number): void };
+  to(target: object, duration: number, vars: Record<string, unknown>): GsapTween;
+}
+
+export interface HowlInstance {
+  play(id?: string | number): number;
+  stop(id?: number): void;
+  pause(id?: number): void;
+  resume(id?: number): void;
+  volume(vol?: number, id?: number): number;
+  loop(loop?: boolean, id?: number): boolean;
+  mute(muted?: boolean, id?: string | number): void;
+  playing(id?: number): boolean;
+  on(event: string, callback: (...args: unknown[]) => void): void;
+  unload(): void;
+  _volume: number;
+  [key: string]: unknown;
+}
+
+export interface UrsoUtilsNamespace {
+  Howler: {
+    codecs(codec: string): boolean;
+    _audioUnlocked: boolean;
+  };
+  Howl: new (opts: Record<string, unknown>) => HowlInstance;
+}
+
+export interface PixiApplicationInstance {
+  init(opts: Record<string, unknown>): Promise<void>;
+  canvas: HTMLCanvasElement;
+  stage: { addChild(child: unknown): void };
+  ticker: { add(fn: () => void): void; maxFPS: number };
+  renderer: { resize(w: number, h: number): void };
+}
+
+export interface PixiContainerInstance {
+  label: string;
+  addChild(child: unknown): void;
+  removeChild(child: unknown): void;
+  scale: { x: number; y: number };
+}
+
+export interface PixiGlobal {
+  Application: new () => PixiApplicationInstance;
+  Container: new () => PixiContainerInstance;
+  Assets: { load(opts: { alias: string; src: string }): Promise<unknown>; reset?(): void };
+}

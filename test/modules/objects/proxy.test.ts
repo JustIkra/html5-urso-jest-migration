@@ -111,6 +111,9 @@ describe('ModulesObjectsProxy', () => {
     mockUrso = createMockUrso();
     (globalThis as Record<string, unknown>).Urso = mockUrso;
 
+    // JS proxy.js uses bare `gsap` global
+    (globalThis as Record<string, unknown>).gsap = gsap;
+
     mockPropertyAdapter = {
       isAdaptiveProperty: vi.fn(() => false),
       propertyChangeHandler: vi.fn(),

@@ -25,7 +25,7 @@ class ModulesAssetsBaseModel {
     this.key = Urso.helper.recursiveGet('key', params, null) as string | null;
     this.path = Urso.helper.recursiveGet('path', params, null) as string | null;
     this.useBinPath = (Urso.helper.recursiveGet('useBinPath', params, false) as boolean) ||
-      (Urso.config as Record<string, unknown>).mode !== 'development';
+      Urso.config.mode !== 'development';
     this.loadingGroup = Urso.helper.recursiveGet('loadingGroup', params, null) as string | null;
     this.placeHolder = Urso.helper.recursiveGet('placeHolder', params, null);
   }

@@ -7,10 +7,6 @@ interface ServiceFacade {
   parse: (template: ModulesTemplateModel, additionalTemplateFlag?: boolean) => ModulesTemplateModel;
 }
 
-declare const Urso: {
-  types: TemplateTypesList;
-};
-
 class ModulesTemplateController {
   public readonly singleton = true;
 

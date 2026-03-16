@@ -21,17 +21,6 @@ interface TemplateParseable {
   _controller?: ComponentInstance;
 }
 
-declare const Urso: {
-  types: { objects: Record<string, number> };
-  helper: {
-    capitaliseFirstLetter: (s: string) => string;
-    mergeObjectsRecursive: <T>(a: T, b: T, deep?: boolean) => T;
-    mergeArrays: <T>(a: T[], b: T[]) => T[];
-  };
-  logger: { error: (...args: unknown[]) => void };
-  getInstance: <T = unknown>(path: string, ...args: unknown[]) => T;
-};
-
 class ModulesTemplateService {
   public readonly singleton = true;
 

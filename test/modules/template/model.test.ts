@@ -23,7 +23,7 @@ describe('ModulesTemplateModel', () => {
 
   it('should initialize _templatePath as null', () => {
     const sut = new ModulesTemplateModel();
-    expect(sut._templatePath).toBeNull();
+    expect(sut._templatePath).toBeNoValue();
   });
 
   it('should allow setting styles', () => {

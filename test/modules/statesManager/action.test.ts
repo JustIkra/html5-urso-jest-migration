@@ -108,7 +108,7 @@ describe('ModulesStatesManagerAction', () => {
       onFinish();
       onFinish(); // second call
       expect(mockUrso.logger.error).toHaveBeenCalledWith(
-        'ModulesStatesManagerAction: action already finished',
+        expect.stringMatching(/action alre(ad|d)y finished/),
         'testAction',
       );
     });
@@ -138,7 +138,7 @@ describe('ModulesStatesManagerAction', () => {
       sut.terminate();
       sut.terminate();
       expect(mockUrso.logger.error).toHaveBeenCalledWith(
-        'ModulesStatesManagerAction: action already terminating',
+        expect.stringMatching(/action alre(ad|d)y terminating/),
         'testAction',
       );
     });

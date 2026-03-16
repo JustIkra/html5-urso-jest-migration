@@ -59,7 +59,7 @@ class ModulesObjectsModelsCheckbox extends ModulesObjectsModelsToggle {
     this.contents = [];
 
     this.action = Urso.helper.recursiveGet('action', params, () => {
-      this.emit(Urso.events.MODULES_OBJECTS_CHECKBOX_PRESS as string, {
+      this.emit(Urso.events.MODULES_OBJECTS_CHECKBOX_PRESS, {
         name: this.name,
         status: this.status,
         class: this['class'],

@@ -1,9 +1,5 @@
 import ComponentsBaseController from '../base/controller';
 
-declare const Urso: {
-  findOne: (selector: string) => SceneObject | null;
-};
-
 interface SceneObject {
   text: string;
   _baseObject: {
@@ -15,8 +11,7 @@ interface SceneObject {
 
 class ComponentsLoaderController extends ComponentsBaseController {
   loadUpdate(loadProgress?: number): void {
-    if (loadProgress !== undefined)
-      this.setLoadProgress(loadProgress);
+    this.setLoadProgress(loadProgress as number);
   }
 
   create(): void {
@@ -44,15 +39,15 @@ class ComponentsLoaderController extends ComponentsBaseController {
   }
 
   get loadAmountText(): SceneObject | null {
-    return Urso.findOne('.loadAmountText');
+    return Urso.findOne('.loadAmountText') as SceneObject | null;
   }
 
   get loaderBg(): SceneObject | null {
-    return Urso.findOne('^loaderBg');
+    return Urso.findOne('^loaderBg') as SceneObject | null;
   }
 
   get loaderBgMask(): SceneObject | null {
-    return Urso.findOne('^loaderBgMask');
+    return Urso.findOne('^loaderBgMask') as SceneObject | null;
   }
 }
 

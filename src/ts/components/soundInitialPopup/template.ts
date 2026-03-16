@@ -1,9 +1,3 @@
-declare const Urso: {
-  types: {
-    objects: Record<string, number>;
-  };
-};
-
 interface TemplateObject {
   type: number;
   x?: number;

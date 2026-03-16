@@ -1,15 +1,11 @@
-declare const Urso: {
-  events: Record<string, string>;
-  setTimeout: (fn: () => void, delay: number) => number;
-  clearTimeout: (id: number) => void;
-};
+import type { GsapTween } from '../types';
 
 class ExtraBrowserEvents {
   public singleton = true;
   public RESIZE_DELAY = 0;
   public emit!: (event: string, params?: unknown) => void;
 
-  private _resizeTimeoutId: number | undefined;
+  private _resizeTimeoutId: GsapTween | undefined;
 
   constructor() {
     this._keyPressHandler = this._keyPressHandler.bind(this);

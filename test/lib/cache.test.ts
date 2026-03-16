@@ -92,6 +92,10 @@ describe('LibCache', () => {
 
   describe('addContainer / getContainer', () => {
     it('should store and retrieve a container', () => {
+      // JS assetsList doesn't include container by default; init it manually
+      if (!sut.assetsList.container) {
+        (sut.assetsList as unknown as Record<string, Record<string, unknown>>).container = {};
+      }
       const data = { id: 'container1' };
       sut.addContainer('c1', data);
       expect(sut.getContainer('c1')).toBe(data);

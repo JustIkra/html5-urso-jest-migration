@@ -17,6 +17,9 @@ describe('ModulesObjectsModelsImagesAnimation', () => {
     );
     mockUrso.cache.getTexture = vi.fn(() => fakeTexture);
     (globalThis as Record<string, unknown>).Urso = mockUrso;
+
+    // JS uses bare `gsap` global
+    (globalThis as Record<string, unknown>).gsap = gsap;
   });
 
   it('should set type to IMAGESANIMATION', () => {
@@ -31,7 +34,7 @@ describe('ModulesObjectsModelsImagesAnimation', () => {
 
   it('should default assetKey to null', () => {
     const sut = new ModulesObjectsModelsImagesAnimation({});
-    expect(sut.assetKey).toBeNull();
+    expect(sut.assetKey).toBeNoValue();
   });
 
   it('should default duration to 0', () => {
@@ -56,7 +59,7 @@ describe('ModulesObjectsModelsImagesAnimation', () => {
 
   it('should default onComplete to null', () => {
     const sut = new ModulesObjectsModelsImagesAnimation({});
-    expect(sut.onComplete).toBeNull();
+    expect(sut.onComplete).toBeNoValue();
   });
 
   it('should log error when texture not found', () => {

@@ -54,7 +54,7 @@ describe('ModulesObjectsModelsToggle', () => {
   it('should default all buttonFrames to null', () => {
     const sut = new ModulesObjectsModelsToggle({});
     for (const key of Object.keys(sut.buttonFrames)) {
-      expect(sut.buttonFrames[key]).toBeNull();
+      expect(sut.buttonFrames[key]).toBeNoValue();
     }
   });
 

@@ -57,12 +57,12 @@ describe('ModulesAssetsModelsAudiosprite', () => {
 
   it('should null out key after constructor', () => {
     const sut = new ModulesAssetsModelsAudiosprite({ key: 'sfx', path: '/audio/sfx' });
-    expect(sut.key).toBeNull();
+    expect(sut.key).toBeNoValue();
   });
 
   it('should null out path after constructor', () => {
     const sut = new ModulesAssetsModelsAudiosprite({ key: 'sfx', path: '/audio/sfx' });
-    expect(sut.path).toBeNull();
+    expect(sut.path).toBeNoValue();
   });
 
   it('should use contents from params if provided', () => {

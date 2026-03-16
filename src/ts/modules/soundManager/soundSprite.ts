@@ -1,37 +1,6 @@
-import type { UrsoInstance, SoundSpriteRange, AudioCodec } from '../../types';
+import type { UrsoInstance, SoundSpriteRange, AudioCodec, GsapGlobal, HowlInstance, GsapTween } from '../../types';
 
-declare const Urso: {
-  events: Record<string, string>;
-  logger: { error: (...args: unknown[]) => void };
-  device: { iOS: boolean };
-};
-
-declare const UrsoUtils: {
-  Howl: new (opts: Record<string, unknown>) => HowlInstance;
-  Howler: { _audioUnlocked: boolean };
-};
-
-declare const gsap: {
-  to: (target: object, duration: number, vars: Record<string, unknown>) => GsapTween;
-};
-
-interface HowlInstance {
-  play: (spriteOrId?: string | number) => number;
-  stop: (id?: number) => void;
-  pause: (id?: number) => void;
-  volume: (vol?: number, id?: number) => number;
-  loop: (loop?: boolean, id?: number) => boolean;
-  mute: (muted: boolean, key?: string) => void;
-  playing: (id?: number) => boolean;
-  on: (event: string, callback: (...args: unknown[]) => void) => void;
-  unload: () => void;
-  _volume: number;
-}
-
-interface GsapTween {
-  kill: () => void;
-  ratio: number;
-}
+declare const gsap: GsapGlobal;
 
 interface SoundState {
   id: number | null;

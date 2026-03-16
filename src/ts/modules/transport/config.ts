@@ -1,9 +1,5 @@
 import type { TransportConfig } from '../../types';
 
-declare const Urso: {
-  helper: { parseGetParams: (key: string) => string | null };
-};
-
 class ModulesTransportConfig {
   getConfig(): TransportConfig {
     return {

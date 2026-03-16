@@ -1,22 +1,3 @@
-declare const Urso: {
-  types: {
-    assets: Record<string, number>;
-    objects: Record<string, number>;
-  };
-  template: {
-    get: () => { styles: Record<string, unknown>; assets: unknown[]; objects: unknown[] };
-  };
-  assets: {
-    preload: (models: unknown[], callback: () => void) => void;
-  };
-  objects: {
-    create: (model: unknown, parent?: unknown) => void;
-  };
-  helper: {
-    mergeArrays: <T>(a: T[], b: T[]) => T[];
-  };
-};
-
 interface KeyDef {
   name: string;
   type: string;

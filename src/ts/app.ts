@@ -1,47 +1,6 @@
-declare const Urso: Record<string, unknown> & {
-  Core: Record<string, Record<string, unknown>>;
-  Game: Record<string, unknown>;
-  config: {
-    title: string;
-    defaultScene: string;
-    extendingChain: string[];
-  };
-  helper: {
-    mobileAndTabletCheck: () => boolean;
-    mergeObjectsRecursive: (target: unknown, source: unknown, deep?: boolean) => unknown;
-    recursiveGet: (path: string, obj: unknown, defaultValue?: unknown) => unknown;
-  };
-  getInstance: <T = unknown>(path: string) => T;
-  getByPath: <T = unknown>(path: string) => T;
-  getInstancesModes: () => string[];
-  addInstancesMode: (mode: string) => void;
-  removeInstancesMode: (mode: string) => void;
-  observer: unknown;
-  browserEvents: unknown;
-  cache: unknown;
-  device: { whenReady: (callback: () => void) => void };
-  loader: unknown;
-  localData: unknown;
-  logger: unknown;
-  math: unknown;
-  time: unknown;
-  tween: unknown;
-  assets: { updateQuality: () => void; checkWebPSupport: () => void };
-  i18n: unknown;
-  transport: unknown;
-  logic: { do: (action: string) => void };
-  objects: unknown;
-  scenes: { init: () => Promise<void>; display: (scene: string) => void };
-  soundManager: unknown;
-  statesManager: unknown;
-  template: unknown;
-  setTimeout: (callback: () => void, delay: number) => { kill: () => void };
-  clearTimeout: (tween: { kill: () => void }) => void;
-};
+import type { GsapGlobal, GsapTween } from './types';
 
-declare const gsap: {
-  delayedCall: (delay: number, callback: () => void) => { kill: () => void };
-};
+declare const gsap: GsapGlobal;
 
 class App {
   public version = 'APP_VERSION';
@@ -55,7 +14,8 @@ class App {
 
     Urso.helper = new (Urso.Core.Lib as Record<string, new () => unknown>).Helper() as typeof Urso.helper;
 
-    const instances = new (Urso.Core.Modules.Instances as Record<string, new () => Record<string, unknown>>).Controller();
+    const Instances = (Urso.Core.Modules as Record<string, Record<string, new () => Record<string, unknown>>>).Instances;
+    const instances = new Instances.Controller();
     Urso.getInstance = instances.getInstance as typeof Urso.getInstance;
     Urso.getByPath = instances.getByPath as typeof Urso.getByPath;
     Urso.getInstancesModes = instances.getModes as typeof Urso.getInstancesModes;
@@ -64,7 +24,7 @@ class App {
 
     Urso.Game = {};
     for (const extention of Urso.config.extendingChain)
-      Urso.helper.mergeObjectsRecursive(Urso.Game, Urso.helper.recursiveGet(extention, window, {}), true);
+      Urso.helper.mergeObjectsRecursive(Urso.Game, Urso.helper.recursiveGet(extention, window, {}) as Record<string, unknown>, true);
 
     Urso.observer = Urso.getInstance('Modules.Observer.Controller');
 
@@ -116,7 +76,7 @@ class App {
       return gsap.delayedCall(delay / 1000, callback);
     };
 
-    Urso.clearTimeout = (tween: { kill: () => void }) => {
+    Urso.clearTimeout = (tween: GsapTween) => {
       tween.kill();
     };
   }

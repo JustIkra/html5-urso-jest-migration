@@ -1,10 +1,5 @@
 import type { ComponentCommon } from '../../types';
 
-declare const Urso: {
-  scenes: { timeScale: number };
-  math: { roundToDigits: (num: number, digits: number) => number };
-};
-
 interface TextObject {
   text: string | number;
   visible: boolean;
@@ -57,7 +52,7 @@ class ComponentsDebugTimescale {
     if (timescaleNewValue < 0.1)
       timescaleNewValue = 0.1;
 
-    Urso.scenes.timeScale = Urso.math.roundToDigits(timescaleNewValue, 2);
+    Urso.scenes.timeScale = Urso.math.roundToDigits(timescaleNewValue, 2) as number;
 
     this._timescaleText!.text = Urso.scenes.timeScale;
     this._timescaleText!.visible = true;

@@ -137,7 +137,7 @@ describe('ModulesObjectsController', () => {
 
     it('should return null when no matches', () => {
       mockFind.do.mockReturnValue(null);
-      expect(sut.find('#missing')).toBeNull();
+      expect(sut.find('#missing')).toBeNoValue();
     });
   });
 
@@ -152,7 +152,7 @@ describe('ModulesObjectsController', () => {
     it('should return null (not false) when no matches', () => {
       mockFind.do.mockReturnValue(null);
       const result = sut.findOne('#missing');
-      expect(result).toBeNull();
+      expect(result).toBeNoValue();
     });
   });
 

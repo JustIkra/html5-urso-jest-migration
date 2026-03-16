@@ -1,10 +1,5 @@
 import type { ComponentCommon } from '../../types';
 
-declare const Urso: {
-  time: { get: () => number };
-  scenes: { getFpsData: () => { fps: number; limit: number } };
-};
-
 interface TextObject {
   text: string;
 }

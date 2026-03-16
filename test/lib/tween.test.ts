@@ -10,7 +10,16 @@ describe('LibTween', () => {
       display: vi.fn(),
     };
 
+    // JS tween.js calls this.addListener(...) in constructor — inject before instantiation
+    (LibTween.prototype as unknown as { addListener: unknown }).addListener = vi.fn();
+    (LibTween.prototype as unknown as { removeListener: unknown }).removeListener = vi.fn();
+
     sut = new LibTween();
+  });
+
+  afterEach(() => {
+    delete (LibTween.prototype as { addListener?: unknown }).addListener;
+    delete (LibTween.prototype as { removeListener?: unknown }).removeListener;
   });
 
   // ==========================================================================

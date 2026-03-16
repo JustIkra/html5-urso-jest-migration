@@ -96,6 +96,38 @@ export class BitmapText extends Container {
   font: Record<string, unknown> = {};
 }
 
+// JS uses PIXI.NineSlicePlane (v7 name), TS uses NineSliceSprite (v8 name)
+export class NineSlicePlane extends Container {
+  texture: Texture = Texture.EMPTY;
+  leftWidth = 0;
+  rightWidth = 0;
+  topHeight = 0;
+  bottomHeight = 0;
+
+  constructor(
+    texture?: Texture | { texture?: Texture; leftWidth?: number; topHeight?: number; rightWidth?: number; bottomHeight?: number },
+    leftWidth?: number,
+    topHeight?: number,
+    rightWidth?: number,
+    bottomHeight?: number,
+  ) {
+    super();
+    if (texture instanceof Texture) {
+      this.texture = texture;
+      if (leftWidth !== undefined) this.leftWidth = leftWidth;
+      if (topHeight !== undefined) this.topHeight = topHeight;
+      if (rightWidth !== undefined) this.rightWidth = rightWidth;
+      if (bottomHeight !== undefined) this.bottomHeight = bottomHeight;
+    } else if (texture) {
+      if (texture.texture) this.texture = texture.texture;
+      if (texture.leftWidth !== undefined) this.leftWidth = texture.leftWidth;
+      if (texture.topHeight !== undefined) this.topHeight = texture.topHeight;
+      if (texture.rightWidth !== undefined) this.rightWidth = texture.rightWidth;
+      if (texture.bottomHeight !== undefined) this.bottomHeight = texture.bottomHeight;
+    }
+  }
+}
+
 export class NineSliceSprite extends Container {
   texture: Texture = Texture.EMPTY;
   leftWidth = 0;
@@ -216,3 +248,15 @@ export class FillGradient {
 }
 
 export class RenderTexture extends Texture {}
+
+export const ExtensionType = {
+  LoadParser: 'load-parser',
+  ResolveParser: 'resolve-parser',
+  CacheParser: 'cache-parser',
+  DetectionParser: 'detection-parser',
+};
+
+export const extensions = {
+  add: vi.fn(),
+  remove: vi.fn(),
+};

@@ -1,12 +1,5 @@
 import type { UrsoInstance } from '../../types';
 
-declare const Urso: {
-  events: Record<string, string>;
-  device: { ScreenOrientation: Record<string, string> };
-  config: { gamePath: string };
-  getInstance: <T = unknown>(path: string) => T;
-};
-
 interface ResolutionConfig {
   orientation: string;
 }

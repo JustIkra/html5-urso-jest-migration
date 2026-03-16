@@ -262,7 +262,7 @@ class ModulesObjectsModelsSpine extends ModulesObjectsBaseModel {
   }
 
   private _eventHandler(_: unknown, event: { data: { name: string } }): void {
-    this.emit(Urso.events.MODULES_OBJECTS_SPINE_EVENT as string, {
+    this.emit(Urso.events.MODULES_OBJECTS_SPINE_EVENT, {
       eventName: event.data.name,
       name: this.name,
       class: this['class'],

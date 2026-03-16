@@ -1,0 +1,25 @@
+{
+  "name": "urso-examples",
+  "version": "0.0.1",
+  "description": "urso engine examples",
+  "type": "module",
+  "author": "Megbrimef",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "dev:js": "vite --config vite.config.js-source.ts",
+    "build": "vite build",
+    "build:js": "vite build --config vite.config.js-source.ts",
+    "preview": "vite preview",
+    "images-convert-webp": "images-convert-webp -c assets.config.json",
+    "images-to-atlas": "images-to-atlas -c assets.config.json",
+    "images-converter": "images-converter -c assets.config.json"
+  },
+  "dependencies": {
+    "@urso/core": "file:.."
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^6.3.5"
+  }
+}

@@ -35,14 +35,6 @@ class LibComposition {
       }
     }
 
-    // When copying from a function/class to a plain object, explicitly
-    // shadow constructor and prototype so they don't leak through
-    // from Object.prototype inheritance
-    if (typeof _source === 'function' && typeof _target !== 'function') {
-      Object.defineProperty(_target, 'constructor', { value: undefined, writable: true, configurable: true, enumerable: false });
-      Object.defineProperty(_target, 'prototype', { value: undefined, writable: true, configurable: true, enumerable: false });
-    }
-
     if (protoFlag && Object.getPrototypeOf(_source) !== Object.prototype) {
       LibComposition.copy(_target, Object.getPrototypeOf(_source) as object);
     }

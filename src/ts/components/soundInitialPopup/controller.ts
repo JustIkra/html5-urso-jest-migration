@@ -1,9 +1,5 @@
 import ComponentsBaseController from '../base/controller';
 
-declare const Urso: {
-  events: Record<string, string>;
-};
-
 interface ButtonObject {
   _baseObject: {
     tint: number;

@@ -21,8 +21,8 @@ interface AdaptableObject {
   scaleY: number;
   alignX: AlignX | string;
   alignY: AlignY | string;
-  width: number | string | null;
-  height: number | string | null;
+  width: number | string | null | false;
+  height: number | string | null | false;
   angle: number;
   stretchingType: StretchingType | string | null;
   type: ObjectTypeId | null;
@@ -52,6 +52,15 @@ class ModulesObjectsPropertyAdapter {
   private _parentToChildDependencies: Record<string, ParentToChildDep>;
   private _parentTypes: ObjectTypeId[];
   private _typesWithoutAnchor: ObjectTypeId[];
+
+  /**
+   * Check whether a value represents "no value" (unset).
+   * JS source uses `false`; TS uses `null`. This helper accepts both
+   * so that the adapter works regardless of which convention the model uses.
+   */
+  private _isNoValue(v: unknown): boolean {
+    return v === null || v === false;
+  }
 
   constructor() {
     this._dependencies = {
@@ -262,11 +271,9 @@ class ModulesObjectsPropertyAdapter {
     return angleOffset;
   }
 
-  // CRITICAL: false->null migration.
-  // Old JS: `typeof object.width !== 'boolean'` meant "width is set (not false)".
-  // New TS: `object.width !== null` means "width is set (not null)".
+  // Supports both false (JS) and null (TS) as "no value".
   private _adaptScaleX(object: AdaptableObject): void {
-    if (object.scaleX !== 1 && object.width !== null) {
+    if (object.scaleX !== 1 && !this._isNoValue(object.width)) {
       Urso.logger.error('ScaleX value cannot be set. Width already used!!');
       this._setPropertyWithoutAdaption(object, 'scaleX', 1);
       return;
@@ -281,7 +288,7 @@ class ModulesObjectsPropertyAdapter {
   }
 
   private _adaptScaleY(object: AdaptableObject): void {
-    if (object.scaleY !== 1 && object.height !== null) {
+    if (object.scaleY !== 1 && !this._isNoValue(object.height)) {
       Urso.logger.error('ScaleY value cannot be set. Height already used!!');
       this._setPropertyWithoutAdaption(object, 'scaleY', 1);
       return;
@@ -337,13 +344,11 @@ class ModulesObjectsPropertyAdapter {
     }
   }
 
-  // CRITICAL: false->null migration.
-  // Old JS: `typeof object.width !== 'boolean'` meant "width is set (not false)".
-  // New TS: `object.width !== null` means "width is set (not null)".
+  // Supports both false (JS) and null (TS) as "no value".
   private _adaptWidth(object: AdaptableObject): void {
-    if (object.width !== null && object.scaleX !== 1) {
+    if (!this._isNoValue(object.width) && object.scaleX !== 1) {
       Urso.logger.error('Width value cannot be set. ScaleX already used!!', object);
-      this._setPropertyWithoutAdaption(object, 'width', null);
+      this._setPropertyWithoutAdaption(object, 'width', false);
       return;
     }
 
@@ -362,11 +367,11 @@ class ModulesObjectsPropertyAdapter {
     }
   }
 
-  // CRITICAL: false->null migration (same as _adaptWidth).
+  // Supports both false (JS) and null (TS) as "no value".
   private _adaptHeight(object: AdaptableObject): void {
-    if (object.height !== null && object.scaleY !== 1) {
+    if (!this._isNoValue(object.height) && object.scaleY !== 1) {
       Urso.logger.error('Height value cannot be set. ScaleY already used!!', object);
-      this._setPropertyWithoutAdaption(object, 'height', null);
+      this._setPropertyWithoutAdaption(object, 'height', false);
       return;
     }
 
@@ -401,20 +406,10 @@ class ModulesObjectsPropertyAdapter {
     return this._getPropertyAsNumber(object, 'height', 'height');
   }
 
-  // CRITICAL: false->null migration.
-  // Old JS `case 'boolean':` handled `false` (no value set).
-  // Now `null` is used, and `typeof null === 'object'`, so we check for null explicitly.
+  // Supports both false (JS) and null (TS) as "no value" sentinel.
+  // JS used `case 'boolean':` for false; TS uses null.  This handles both.
   private _getPropertyAsNumber(object: AdaptableObject, propertyName: string, parentPropertyName: string): number {
     const value = object[propertyName];
-
-    if (value === null) {
-      // null means "no explicit value" -- inherit from parent or read from pixi
-      if (this._canBeParent(object)) {
-        return this._getPropertyAsNumber(object.parent!, propertyName, parentPropertyName);
-      } else {
-        return (object._baseObject as unknown as Record<string, number>)[propertyName];
-      }
-    }
 
     if (typeof value === 'number') {
       return value;
@@ -423,6 +418,15 @@ class ModulesObjectsPropertyAdapter {
     if (typeof value === 'string') {
       const parentValue = this._getPropertyAsNumber(object.parent!, parentPropertyName, parentPropertyName);
       return this._getRoundedPercentageOfNumber(value, parentValue);
+    }
+
+    // null (TS) or false (JS) — "no explicit value": inherit from parent or read from pixi
+    if (this._isNoValue(value)) {
+      if (this._canBeParent(object)) {
+        return this._getPropertyAsNumber(object.parent!, propertyName, parentPropertyName);
+      } else {
+        return (object._baseObject as unknown as Record<string, number>)[propertyName];
+      }
     }
 
     Urso.logger.error('Property value not number or string!', object, propertyName);

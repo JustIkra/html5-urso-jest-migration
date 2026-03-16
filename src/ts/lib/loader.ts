@@ -99,9 +99,6 @@ class LibLoader {
     });
 
     await Promise.all(assetsLoading);
-
-    this._assetsQuery = [];
-    this._isRunning = false;
     await callback();
   }
 

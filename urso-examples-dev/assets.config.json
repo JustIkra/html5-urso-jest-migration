@@ -1,0 +1,67 @@
+{
+  "audio": {
+    "sourceFolder": "src/assets/sounds",
+    "output": "src/bin/sounds",
+    "silence": 1,
+    "format": "howler",
+    "types": {
+      "desktop": {
+        "output": "audiosprite"
+      },
+      "mobile": {
+        "output": "mobile/audiosprite",
+        "optimizations": {
+          "bitrate": 44,
+          "samplerate": 22050,
+          "channels": 1
+        }
+      }
+    }
+  },
+  "images": {
+    "output": "src/bin/images",
+    "sourceFolder": "src/assets/images",
+    "folders": [
+      "test"
+    ],
+    "types": {
+      "high": {
+        "scaleFactor": 1,
+        "quality": 100,
+        "speed": 3
+      },
+      "hd": {
+        "scaleFactor": 0.75,
+        "quality": 75,
+        "speed": 3
+      },
+      "medium": {
+        "scaleFactor": 0.5,
+        "quality": 50,
+        "speed": 3
+      },
+      "low": {
+        "scaleFactor": 0.25,
+        "quality": 25,
+        "speed": 3
+      }
+    }
+  },
+  "images_atlas": {
+    "sourceFolder": "src/bin/images",
+    "output": "src/bin/images_atlas",
+    "folders": ["hd", "low"],
+    "padding": 1,
+    "size": 1000,
+    "saveFolders": true,
+    "extensions": ["jpg", "png"],
+    "deleteSourceFile": false
+  },
+  "webpConverter": {
+    "sourceFolder": "src/bin/images_atlas",
+    "folders": ["hd", "low"],
+    "extensions": ["jpg", "png"],
+    "deleteSourceFile": true,
+    "overwriteJson": true
+  }
+}

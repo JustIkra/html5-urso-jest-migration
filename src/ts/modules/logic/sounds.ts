@@ -1,15 +1,5 @@
 import type { UrsoInstance } from '../../types';
 
-declare const Urso: {
-  events: Record<string, string>;
-  cache: {
-    assetsList: {
-      sound: Record<string, unknown>;
-      json: Record<string, unknown>;
-    };
-  };
-};
-
 interface SoundConfigEntry {
   soundKey: string;
   event: string;

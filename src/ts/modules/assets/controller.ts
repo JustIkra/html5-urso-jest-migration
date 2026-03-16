@@ -15,7 +15,7 @@ class ModulesAssetsController {
   public getInstance!: <T = unknown>(path: string, ...args: unknown[]) => T;
 
   updateQuality(): void {
-    if ((Urso.config as Record<string, unknown>).useBinPath) {
+    if (Urso.config.useBinPath) {
       this.getInstance<ServiceInstance>('Service').updateQuality();
     }
 

@@ -215,11 +215,12 @@ describe('ModulesObjectsPool', () => {
         setToSetupPose,
         stop,
         clearListeners,
+        setAnimationConfig: vi.fn(),
       });
       const poolElement = { data: spineObj };
       mockObjectPool.getElement.mockReturnValue(poolElement);
 
-      const object = makePoolObj({ type: ObjectTypeId.SPINE });
+      const object = makePoolObj({ type: ObjectTypeId.SPINE, animation: { name: 'idle' } });
       const parent = makePoolObj();
       sut.getElement(object as unknown as Parameters<typeof sut.getElement>[0], parent as unknown as Parameters<typeof sut.getElement>[1]);
 

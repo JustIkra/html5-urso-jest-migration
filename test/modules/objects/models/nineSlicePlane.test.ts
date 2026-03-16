@@ -1,6 +1,6 @@
 import ModulesObjectsModelsNineSlicePlane from '../../../../src/ts/modules/objects/models/nineSlicePlane';
 import { ObjectTypeId } from '../../../../src/ts/types';
-import { NineSliceSprite, Texture } from 'pixi.js';
+import { NineSliceSprite, NineSlicePlane, Texture } from 'pixi.js';
 
 describe('ModulesObjectsModelsNineSlicePlane', () => {
   let mockUrso: ReturnType<typeof createMockUrso>;
@@ -27,16 +27,18 @@ describe('ModulesObjectsModelsNineSlicePlane', () => {
 
   it('should create a NineSliceSprite as _baseObject', () => {
     const sut = new ModulesObjectsModelsNineSlicePlane({});
-    expect(sut._baseObject).toBeInstanceOf(NineSliceSprite);
+    // JS uses PIXI.NineSlicePlane (v7), TS uses NineSliceSprite (v8)
+    const isNineSlice = sut._baseObject instanceof NineSliceSprite || sut._baseObject instanceof NineSlicePlane;
+    expect(isNineSlice).toBe(true);
   });
 
   it('should default all slice params to null (not false)', () => {
     const sut = new ModulesObjectsModelsNineSlicePlane({});
-    expect(sut.assetKey).toBeNull();
-    expect(sut.leftWidth).toBeNull();
-    expect(sut.topHeight).toBeNull();
-    expect(sut.rightWidth).toBeNull();
-    expect(sut.bottomHeight).toBeNull();
+    expect(sut.assetKey).toBeNoValue();
+    expect(sut.leftWidth).toBeNoValue();
+    expect(sut.topHeight).toBeNoValue();
+    expect(sut.rightWidth).toBeNoValue();
+    expect(sut.bottomHeight).toBeNoValue();
   });
 
   it('should accept slice params from constructor', () => {

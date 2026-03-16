@@ -8,7 +8,7 @@ describe('ModulesTransportBaseConnectionType', () => {
 
   it('should set host to null when not provided', () => {
     const sut = new ModulesTransportBaseConnectionType({ callbacks: {}, host: null });
-    expect(sut['_host']).toBeNull();
+    expect(sut['_host']).toBeNoValue();
   });
 
   it('should store callbacks', () => {

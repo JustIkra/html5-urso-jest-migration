@@ -1,14 +1,5 @@
 import type { ResolutionConfig, AdaptiveConfig } from '../../types';
 
-declare const Urso: {
-  device: {
-    ScreenOrientation: {
-      LANDSCAPE: 'landscape';
-      PORTRAIT: 'portrait';
-    };
-  };
-};
-
 class ModulesScenesResolutionsConfig {
   public readonly singleton = true;
 

@@ -9,16 +9,19 @@ export interface MockObserver {
   add: ReturnType<typeof vi.fn>;
   remove: ReturnType<typeof vi.fn>;
   fire: ReturnType<typeof vi.fn>;
+  emit: ReturnType<typeof vi.fn>;
   setPrefix: ReturnType<typeof vi.fn>;
   clearAllLocal: ReturnType<typeof vi.fn>;
   clear: ReturnType<typeof vi.fn>;
 }
 
 function createMockObserver(): MockObserver {
+  const fire = vi.fn();
   return {
     add: vi.fn(),
     remove: vi.fn(),
-    fire: vi.fn(),
+    fire,
+    emit: fire,
     setPrefix: vi.fn(),
     clearAllLocal: vi.fn(),
     clear: vi.fn(() => true),
@@ -240,6 +243,7 @@ export function createMockUrso(): MockUrsoResult {
       getGlobalAtlas: vi.fn(() => ({})),
       getFile: vi.fn(),
       addFile: vi.fn(),
+      getJsonAtlases: vi.fn(() => ({})),
     },
     config: {
       defaultLogLevel: '0,1,2,3',
@@ -333,3 +337,41 @@ declare global {
   function createMockUrso(): MockUrsoResult;
 }
 (globalThis as Record<string, unknown>).createMockUrso = createMockUrso;
+
+// ============================================================================
+// PIXI Global (JS source uses window.PIXI)
+// ============================================================================
+
+import * as PIXI from './__mocks__/pixi';
+(globalThis as Record<string, unknown>).PIXI = PIXI;
+
+// ============================================================================
+// Custom matcher: toBeNoValue() — accepts both null (TS) and false (JS)
+// ============================================================================
+
+interface ToBeNoValueResult {
+  pass: boolean;
+  message: () => string;
+}
+
+expect.extend({
+  toBeNoValue(received: unknown): ToBeNoValueResult {
+    const pass = received === null || received === false;
+    return {
+      pass,
+      message: () =>
+        `expected ${JSON.stringify(received)} ${pass ? 'not ' : ''}to be null or false (no-value)`,
+    };
+  },
+});
+
+declare module 'vitest' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface Assertion {
+    toBeNoValue(): void;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  interface AsymmetricMatchersContaining {
+    toBeNoValue(): void;
+  }
+}

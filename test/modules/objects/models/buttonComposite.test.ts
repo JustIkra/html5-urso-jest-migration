@@ -33,10 +33,10 @@ describe('ModulesObjectsModelsButtonComposite', () => {
 
   it('should default all buttonFrames to null', () => {
     const sut = new ModulesObjectsModelsButtonComposite({});
-    expect(sut.buttonFrames.over).toBeNull();
-    expect(sut.buttonFrames.out).toBeNull();
-    expect(sut.buttonFrames.pressed).toBeNull();
-    expect(sut.buttonFrames.disabled).toBeNull();
+    expect(sut.buttonFrames.over).toBeNoValue();
+    expect(sut.buttonFrames.out).toBeNoValue();
+    expect(sut.buttonFrames.pressed).toBeNoValue();
+    expect(sut.buttonFrames.disabled).toBeNoValue();
   });
 
   it('should accept custom action', () => {

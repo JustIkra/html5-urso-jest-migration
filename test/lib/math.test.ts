@@ -61,11 +61,11 @@ describe('LibMath', () => {
     });
 
     it('should return null for NaN num', () => {
-      expect(sut.roundToDigits(NaN, 2)).toBeNull();
+      expect(sut.roundToDigits(NaN, 2)).toBeNoValue();
     });
 
     it('should return null for NaN digits', () => {
-      expect(sut.roundToDigits(3.14, NaN)).toBeNull();
+      expect(sut.roundToDigits(3.14, NaN)).toBeNoValue();
     });
   });
 

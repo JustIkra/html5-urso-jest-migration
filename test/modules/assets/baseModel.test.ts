@@ -22,37 +22,37 @@ describe('ModulesAssetsBaseModel', () => {
 
   it('should default id to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut.id).toBeNull();
+    expect(sut.id).toBeNoValue();
   });
 
   it('should default type to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut.type).toBeNull();
+    expect(sut.type).toBeNoValue();
   });
 
   it('should default key to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut.key).toBeNull();
+    expect(sut.key).toBeNoValue();
   });
 
   it('should default path to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut.path).toBeNull();
+    expect(sut.path).toBeNoValue();
   });
 
   it('should default loadingGroup to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut.loadingGroup).toBeNull();
+    expect(sut.loadingGroup).toBeNoValue();
   });
 
   it('should default placeHolder to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut.placeHolder).toBeNull();
+    expect(sut.placeHolder).toBeNoValue();
   });
 
   it('should default _templatePath to null', () => {
     const sut = new ModulesAssetsBaseModel({});
-    expect(sut._templatePath).toBeNull();
+    expect(sut._templatePath).toBeNoValue();
   });
 
   it('should accept id from params', () => {

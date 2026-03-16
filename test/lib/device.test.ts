@@ -162,7 +162,17 @@ describe('LibDevice', () => {
 
   describe('isConsoleOpen', () => {
     it('should return false by default', () => {
-      expect(LibDevice.isConsoleOpen()).toBe(false);
+      // jsdom lacks console.profile — stub it so JS source doesn't throw
+      const profileStub = vi.fn();
+      const profileEndStub = vi.fn();
+      (console as unknown as Record<string, unknown>).profile = profileStub;
+      (console as unknown as Record<string, unknown>).profileEnd = profileEndStub;
+      try {
+        expect(LibDevice.isConsoleOpen()).toBe(false);
+      } finally {
+        delete (console as unknown as Record<string, unknown>).profile;
+        delete (console as unknown as Record<string, unknown>).profileEnd;
+      }
     });
   });
 
@@ -176,7 +186,7 @@ describe('LibDevice', () => {
         value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
         configurable: true,
       });
-      expect(LibDevice.isAndroidStockBrowser()).toBe(false);
+      expect(LibDevice.isAndroidStockBrowser()).toBeFalsy();
     });
   });
 

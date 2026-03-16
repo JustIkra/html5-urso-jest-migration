@@ -1,12 +1,6 @@
 import ComponentsBaseController from '../base/controller';
 import type { LayersSwitcherConfig } from './config';
 
-declare const Urso: {
-  events: Record<string, string>;
-  findAll: (selector: string) => Array<{ visible: boolean }>;
-  logger: { error: (...args: unknown[]) => void };
-};
-
 class ComponentsLayersSwitcherController extends ComponentsBaseController {
   private _config: LayersSwitcherConfig;
 

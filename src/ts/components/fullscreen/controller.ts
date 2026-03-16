@@ -1,13 +1,6 @@
 import ComponentsBaseController from '../base/controller';
 import type { UrsoInstance } from '../../types';
 
-declare const Urso: {
-  events: Record<string, string>;
-  device: { desktop: boolean; iOS: boolean; android: boolean; ScreenOrientation: Record<string, string> };
-  localData: { set: (key: string, value: unknown) => void };
-  getInstance: <T = unknown>(path: string) => T;
-};
-
 interface ResolutionConfig {
   orientation: string;
 }

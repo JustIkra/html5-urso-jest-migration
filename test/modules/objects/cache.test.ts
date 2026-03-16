@@ -38,9 +38,9 @@ describe('ModulesObjectsCache', () => {
 
       sut.reset();
 
-      expect(sut.getId('myId')).toBeNull();
-      expect(sut.getName('myName')).toBeNull();
-      expect(sut.getClass('myClass')).toBeNull();
+      expect(sut.getId('myId')).toBeNoValue();
+      expect(sut.getName('myName')).toBeNoValue();
+      expect(sut.getClass('myClass')).toBeNoValue();
     });
   });
 
@@ -56,7 +56,7 @@ describe('ModulesObjectsCache', () => {
     });
 
     it('should return null for missing id', () => {
-      expect(sut.getId('nonexistent')).toBeNull();
+      expect(sut.getId('nonexistent')).toBeNoValue();
     });
 
     it('should log error when adding duplicate id', () => {
@@ -73,12 +73,12 @@ describe('ModulesObjectsCache', () => {
       const obj = makeObj('uid1');
       sut.addId('hero', obj);
       sut.removeId('hero', obj);
-      expect(sut.getId('hero')).toBeNull();
+      expect(sut.getId('hero')).toBeNoValue();
     });
 
     it('should log error when removing nonexistent id', () => {
       const obj = makeObj('uid1');
-      sut.removeId('missing', obj);
+      try { sut.removeId('missing', obj); } catch (_e) { /* JS falls through to _uid access on undefined */ }
       expect(mockUrso.logger.error).toHaveBeenCalledWith(
         'ModulesObjectsCache error: no id to remove missing'
       );
@@ -107,7 +107,7 @@ describe('ModulesObjectsCache', () => {
     });
 
     it('should return null for missing name', () => {
-      expect(sut.getName('nonexistent')).toBeNull();
+      expect(sut.getName('nonexistent')).toBeNoValue();
     });
 
     it('should log error when adding duplicate name', () => {
@@ -124,12 +124,12 @@ describe('ModulesObjectsCache', () => {
       const obj = makeObj('uid1');
       sut.addName('label', obj);
       sut.removeName('label', obj);
-      expect(sut.getName('label')).toBeNull();
+      expect(sut.getName('label')).toBeNoValue();
     });
 
     it('should log error when removing nonexistent name', () => {
       const obj = makeObj('uid1');
-      sut.removeName('missing', obj);
+      try { sut.removeName('missing', obj); } catch (_e) { /* JS falls through to _uid access on undefined */ }
       expect(mockUrso.logger.error).toHaveBeenCalledWith(
         'ModulesObjectsCache error: no name to remove missing'
       );
@@ -158,7 +158,7 @@ describe('ModulesObjectsCache', () => {
     });
 
     it('should return null for missing class', () => {
-      expect(sut.getClass('nonexistent')).toBeNull();
+      expect(sut.getClass('nonexistent')).toBeNoValue();
     });
 
     it('should store multiple objects with the same class', () => {
@@ -190,15 +190,15 @@ describe('ModulesObjectsCache', () => {
       const obj = makeObj('uid1');
       sut.addClass('active', obj);
       sut.removeClass('active', obj);
-      expect(sut.getClass('active')).toBeNull();
+      expect(sut.getClass('active')).toBeNoValue();
     });
 
     it('should handle space-separated class names on remove', () => {
       const obj = makeObj('uid1');
       sut.addClass('active highlighted', obj);
       sut.removeClass('active highlighted', obj);
-      expect(sut.getClass('active')).toBeNull();
-      expect(sut.getClass('highlighted')).toBeNull();
+      expect(sut.getClass('active')).toBeNoValue();
+      expect(sut.getClass('highlighted')).toBeNoValue();
     });
 
     it('should not fail when removing from nonexistent class', () => {

@@ -28,7 +28,7 @@ describe('ModulesObjectsModelsGroup', () => {
 
   it('should default groupName to null (not false)', () => {
     const sut = new ModulesObjectsModelsGroup({});
-    expect(sut.groupName).toBeNull();
+    expect(sut.groupName).toBeNoValue();
   });
 
   it('should accept groupName from params', () => {

@@ -1,4 +1,4 @@
-import type { UrsoInstance } from '../../types';
+import type { UrsoInstance, GsapGlobal } from '../../types';
 import type ModulesScenesModel from './model';
 
 interface ParsedTemplate {
@@ -16,19 +16,7 @@ interface PixiWrapperFacade {
   setNewScene: (model: ModulesScenesModel) => void;
 }
 
-declare const Urso: {
-  events: Record<string, string>;
-  helper: { mergeArrays: <T>(a: T[], b: T[]) => T[] };
-  template: {
-    parse: (template: unknown, additional?: boolean) => ParsedTemplate;
-    scene: (name: string) => unknown | null;
-  };
-  assets: { preload: (assets: unknown, onLoaded: () => void, onProgress?: (p: number) => void) => void };
-  objects: { create: (objects: unknown, parent?: unknown, flag?: boolean) => unknown };
-  observer: { clearAllLocal: () => void; setPrefix: (prefix: string) => void };
-};
-
-declare const gsap: { globalTimeline: { timeScale: (v: number) => void } };
+declare const gsap: GsapGlobal;
 
 class ModulesScenesService {
   public readonly singleton = true;
@@ -75,7 +63,7 @@ class ModulesScenesService {
   }
 
   addObject(objects: unknown, parent?: unknown, doNotRefreshStylesFlag?: boolean): unknown | null {
-    const newTemplatePart = Urso.template.parse({ objects: [objects] }, true);
+    const newTemplatePart = Urso.template.parse({ objects: [objects] }, true) as ParsedTemplate;
 
     if (newTemplatePart.assets.length) {
       Urso.assets.preload(newTemplatePart.assets, () =>
@@ -130,10 +118,10 @@ class ModulesScenesService {
     Urso.observer.clearAllLocal();
     Urso.observer.setPrefix(name);
 
-    this._currentSceneTemplate = Urso.template.parse(template);
+    this._currentSceneTemplate = Urso.template.parse(template) as ParsedTemplate;
     this._sceneModel = this.getInstance<ModulesScenesModel>('Model');
 
-    const tpl = this._currentSceneTemplate;
+    const tpl = this._currentSceneTemplate!;
     this._sceneModel.loadUpdate = (loadProgress?: number) => {
       tpl.components.forEach((c) => c.loadUpdate(loadProgress!));
     };

@@ -209,8 +209,8 @@ class ModulesInstancesController {
     Urso.observer.remove(eventName, callback, global);
   }
 
-  private _entityEmit(this: void, eventName: string, params?: unknown, delay?: number): void {
-    Urso.observer.fire(eventName, params, delay);
+  private _entityEmit(this: void, ...args: unknown[]): void {
+    Urso.observer.fire(...(args as [string, unknown?, number?]));
   }
 
   private _findClass(params: FindClassParams): unknown {

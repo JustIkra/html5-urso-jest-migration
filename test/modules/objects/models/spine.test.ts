@@ -30,16 +30,16 @@ describe('ModulesObjectsModelsSpine', () => {
 
   it('should default assetKey to null', () => {
     const sut = new ModulesObjectsModelsSpine({});
-    expect(sut.assetKey).toBeNull();
+    expect(sut.assetKey).toBeNoValue();
   });
 
   it('should default animation config', () => {
     const sut = new ModulesObjectsModelsSpine({});
     expect(sut.animation.timeScale).toBe(1);
-    expect(sut.animation.name).toBeNull();
-    expect(sut.animation.skinName).toBeNull();
+    expect(sut.animation.name).toBeNoValue();
+    expect(sut.animation.skinName).toBeNoValue();
     expect(sut.animation.loop).toBe(false);
-    expect(sut.animation.onComplete).toBeNull();
+    expect(sut.animation.onComplete).toBeNoValue();
   });
 
   it('should default contents to empty array', () => {

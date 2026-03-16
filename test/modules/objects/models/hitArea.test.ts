@@ -66,10 +66,10 @@ describe('ModulesObjectsModelsHitArea', () => {
 
   it('should default keyDownAction/mouseOverAction/mouseOutAction/onTouchMoveCallback to null', () => {
     const sut = new ModulesObjectsModelsHitArea({});
-    expect(sut.keyDownAction).toBeNull();
-    expect(sut.mouseOverAction).toBeNull();
-    expect(sut.mouseOutAction).toBeNull();
-    expect(sut.onTouchMoveCallback).toBeNull();
+    expect(sut.keyDownAction).toBeNoValue();
+    expect(sut.mouseOverAction).toBeNoValue();
+    expect(sut.mouseOutAction).toBeNoValue();
+    expect(sut.onTouchMoveCallback).toBeNoValue();
   });
 
   it('should default customInteractionArea to null', () => {

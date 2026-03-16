@@ -1,14 +1,5 @@
 import type { UrsoInstance, I18nLocalesMap, AssetTypeId } from '../../types';
 
-declare const Urso: {
-  helper: { interpolate: (str: string, vars: Record<string, unknown>) => string };
-  cache: { getJson: (key: string) => Record<string, string> | null };
-  logger: { error: (...args: unknown[]) => void };
-  events: Record<string, string>;
-  types: { assets: Record<string, AssetTypeId> };
-  assets: { preload: (asset: unknown, callback: () => void) => void };
-};
-
 class ModulesI18nController {
   #vocabulary: Record<string, string> | null = null;
 
@@ -30,7 +21,7 @@ class ModulesI18nController {
       return;
     }
 
-    this.#vocabulary = jsonResource;
+    this.#vocabulary = jsonResource as Record<string, string> | null;
     this.emit(Urso.events.MODULES_I18N_NEW_LOCALE_WAS_SET, localeKey);
   }
 

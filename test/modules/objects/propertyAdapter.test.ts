@@ -21,8 +21,8 @@ interface MockModel {
   scaleY: number;
   alignX: string;
   alignY: string;
-  width: number | string | null;
-  height: number | string | null;
+  width: number | string | null | false;
+  height: number | string | null | false;
   angle: number;
   stretchingType: string | null;
   type: ObjectTypeId | null;
@@ -55,8 +55,8 @@ function makeModel(overrides: Partial<MockModel> = {}): MockModel {
     scaleY: 1,
     alignX: 'left',
     alignY: 'top',
-    width: null,
-    height: null,
+    width: false,
+    height: false,
     angle: 0,
     stretchingType: null,
     type: ObjectTypeId.IMAGE,
@@ -157,8 +157,8 @@ describe('ModulesObjectsPropertyAdapter', () => {
   // ========================================================================
 
   describe('scaleX adaptation (false->null migration)', () => {
-    it('should set pixi scale.x when scaleX is valid and width is null', () => {
-      const obj = makeModel({ scaleX: 2, width: null });
+    it('should set pixi scale.x when scaleX is valid and width is not set', () => {
+      const obj = makeModel({ scaleX: 2, width: false });
       sut.propertyChangeHandler(obj as unknown as Parameters<typeof sut.propertyChangeHandler>[0], 'scaleX');
       expect(obj._baseObject.scale.x).toBe(2);
     });
@@ -178,8 +178,8 @@ describe('ModulesObjectsPropertyAdapter', () => {
   });
 
   describe('scaleY adaptation (false->null migration)', () => {
-    it('should set pixi scale.y when scaleY is valid and height is null', () => {
-      const obj = makeModel({ scaleY: 0.5, height: null });
+    it('should set pixi scale.y when scaleY is valid and height is not set', () => {
+      const obj = makeModel({ scaleY: 0.5, height: false });
       sut.propertyChangeHandler(obj as unknown as Parameters<typeof sut.propertyChangeHandler>[0], 'scaleY');
       expect(obj._baseObject.scale.y).toBe(0.5);
     });
@@ -210,11 +210,11 @@ describe('ModulesObjectsPropertyAdapter', () => {
       expect(obj._baseObject.width).toBe(50); // unchanged
     });
 
-    it('should error and reset width to null when scaleX is already set', () => {
+    it('should error and reset width to no-value when scaleX is already set', () => {
       const obj = makeModel({ width: 200, scaleX: 2 });
       sut.propertyChangeHandler(obj as unknown as Parameters<typeof sut.propertyChangeHandler>[0], 'width');
       expect(mockUrso.logger.error).toHaveBeenCalledWith('Width value cannot be set. ScaleX already used!!', obj);
-      expect(obj.width).toBeNull();
+      expect(obj.width).toBeNoValue();
     });
 
     it('should not set pixi width for parent types (container)', () => {
@@ -239,11 +239,11 @@ describe('ModulesObjectsPropertyAdapter', () => {
       expect(obj._baseObject.height).toBe(75); // unchanged
     });
 
-    it('should error and reset height to null when scaleY is already set', () => {
+    it('should error and reset height to no-value when scaleY is already set', () => {
       const obj = makeModel({ height: 200, scaleY: 3 });
       sut.propertyChangeHandler(obj as unknown as Parameters<typeof sut.propertyChangeHandler>[0], 'height');
       expect(mockUrso.logger.error).toHaveBeenCalledWith('Height value cannot be set. ScaleY already used!!', obj);
-      expect(obj.height).toBeNull();
+      expect(obj.height).toBeNoValue();
     });
   });
 
@@ -476,10 +476,10 @@ describe('ModulesObjectsPropertyAdapter', () => {
   // _getPropertyAsNumber with null (false->null migration)
   // ========================================================================
 
-  describe('property as number with null values', () => {
-    it('should read from pixi when width is null on non-parent type', () => {
+  describe('property as number with no-value (false/null)', () => {
+    it('should read from pixi when width is not set on non-parent type', () => {
       const pixi = makePixi({ width: 150 });
-      const obj = makeModel({ width: null, type: ObjectTypeId.IMAGE, _baseObject: pixi });
+      const obj = makeModel({ width: false, type: ObjectTypeId.IMAGE, _baseObject: pixi });
       // Trigger through align which calls _getWidthAsNumber
       const parent = makeModel({ width: 400, type: ObjectTypeId.CONTAINER, _baseObject: makePixi({ width: 400 }) });
       obj.parent = parent as MockModel;
@@ -489,10 +489,10 @@ describe('ModulesObjectsPropertyAdapter', () => {
       expect(obj._baseObject.x).toBe(250);
     });
 
-    it('should inherit from parent when width is null on parent type', () => {
+    it('should inherit from parent when width is not set on parent type', () => {
       const grandparent = makeModel({ width: 800, type: ObjectTypeId.CONTAINER, _baseObject: makePixi({ width: 800 }) });
-      const parent = makeModel({ width: null, type: ObjectTypeId.CONTAINER, parent: grandparent as MockModel, _baseObject: makePixi() });
-      // Parent with null width should inherit from grandparent (800)
+      const parent = makeModel({ width: false, type: ObjectTypeId.CONTAINER, parent: grandparent as MockModel, _baseObject: makePixi() });
+      // Parent with unset width should inherit from grandparent (800)
       const pixi = makePixi({ width: 100 });
       const child = makeModel({ width: '50%', parent: parent as MockModel, _baseObject: pixi });
       sut.propertyChangeHandler(child as unknown as Parameters<typeof sut.propertyChangeHandler>[0], 'width');

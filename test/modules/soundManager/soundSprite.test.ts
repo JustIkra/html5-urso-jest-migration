@@ -47,15 +47,14 @@ describe('ModulesSoundManagerSoundSprite', () => {
       }),
     };
 
-    // Mock FileReader
-    const origFileReader = globalThis.FileReader;
+    // Mock FileReader — do NOT call onloadend synchronously.
+    // JS constructor: _soundsState is not yet initialized when FileReader.onloadend fires sync.
     (globalThis as Record<string, unknown>).FileReader = vi.fn(() => {
       const instance = {
         onloadend: null as (() => void) | null,
         result: 'data:audio/ogg;base64,test',
         readAsDataURL: vi.fn(function (this: typeof instance) {
           fileReaderInstances.push(this);
-          if (this.onloadend) this.onloadend();
         }),
       };
       return instance;
@@ -74,12 +73,17 @@ describe('ModulesSoundManagerSoundSprite', () => {
   });
 
   function createSut(sprite: Record<string, [number, number]> = { click: [0, 500], beep: [500, 300] }, codec: string | null = 'ogg') {
-    return new ModulesSoundManagerSoundSprite({
+    const sut = new ModulesSoundManagerSoundSprite({
       name: 'testSound',
       sprite,
       audiosprite: 'fake-audio-data',
       codec: codec as 'ogg' | null,
     });
+    // Trigger deferred FileReader onloadend after _soundsState is initialized
+    for (const reader of fileReaderInstances) {
+      reader.onloadend?.();
+    }
+    return sut;
   }
 
   describe('constructor', () => {

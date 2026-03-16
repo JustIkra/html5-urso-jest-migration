@@ -29,37 +29,37 @@ describe('ModulesObjectsModelsText', () => {
   // false -> null migration
   it('should default text to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.text).toBeNull();
+    expect(sut.text).toBeNoValue();
   });
 
   it('should default localeId to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.localeId).toBeNull();
+    expect(sut.localeId).toBeNoValue();
   });
 
   it('should default fontSize to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.fontSize).toBeNull();
+    expect(sut.fontSize).toBeNoValue();
   });
 
   it('should default dropShadow to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.dropShadow).toBeNull();
+    expect(sut.dropShadow).toBeNoValue();
   });
 
   it('should default wordWrap to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.wordWrap).toBeNull();
+    expect(sut.wordWrap).toBeNoValue();
   });
 
   it('should default fillCustomColors to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.fillCustomColors).toBeNull();
+    expect(sut.fillCustomColors).toBeNoValue();
   });
 
   it('should default fillGradientStops to null (not false)', () => {
     const sut = new ModulesObjectsModelsText({});
-    expect(sut.fillGradientStops).toBeNull();
+    expect(sut.fillGradientStops).toBeNoValue();
   });
 
   it('should accept text from params', () => {

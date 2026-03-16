@@ -13,12 +13,14 @@ jsconfig.json
 /.vs/slnx.sqlite
 /.vs
 /build
-/docs
 /yarn.lock
 # server.js
 
 coverage
-urso-examples-dev
+urso-examples-dev/node_modules
+urso-examples-dev/build
+urso-examples-dev/yarn.lock
+urso-examples-dev/dist
 .memory-base
 .claude
 CLAUDE.md

@@ -69,7 +69,7 @@ describe('ModulesObjectsModelsCheckbox', () => {
     const sut = new ModulesObjectsModelsCheckbox({
       'buttonFrames.unpressedOut': unpressedOutFrame,
     } as Record<string, unknown>);
-    expect(sut.lable).toBeNull();
+    expect(sut.lable).toBeNoValue();
   });
 
   it('should default defaultStatus to unpressed', () => {

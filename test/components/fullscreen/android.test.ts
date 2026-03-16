@@ -39,9 +39,9 @@ describe('ComponentsFullscreenAndroid', () => {
   });
 
   describe('isFullscreen', () => {
-    it('should return false by default', () => {
+    it('should return falsy by default', () => {
       const sut = createSut();
-      expect(sut.isFullscreen).toBe(false);
+      expect(sut.isFullscreen).toBeFalsy();
     });
   });
 

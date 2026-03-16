@@ -15,20 +15,6 @@ interface CurrentResolution extends ResolutionConfig {
   base: ResolutionConfig;
 }
 
-declare const Urso: {
-  device: {
-    ScreenOrientation: { LANDSCAPE: 'landscape'; PORTRAIT: 'portrait' };
-  };
-  events: Record<string, string>;
-  helper: {
-    objectClone: <T>(obj: T) => T;
-    mobileAndTabletCheck: () => boolean;
-  };
-  math: { intMakeBetween: (val: number, min: number, max: number) => number };
-  addInstancesMode: (mode: string) => void;
-  removeInstancesMode: (mode: string, silent?: boolean) => void;
-};
-
 class ModulesScenesResolutions {
   public readonly singleton = true;
 

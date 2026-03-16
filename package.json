@@ -9,9 +9,13 @@
   "scripts": {
     "dev": "vite",
     "build:prod": "vite build",
+    "build:ts": "vite build --config vite.config.ts-build.ts",
+    "build:js": "vite build",
     "serve": "vite preview",
     "watch": "vite build --watch",
     "test": "vitest run",
+    "test:js": "vitest run --config vitest.config.js-source.ts",
+    "test:both": "npm run test:js && npm run test",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit"

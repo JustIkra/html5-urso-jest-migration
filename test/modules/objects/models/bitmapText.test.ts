@@ -29,22 +29,22 @@ describe('ModulesObjectsModelsBitmapText', () => {
   // false -> null
   it('should default text to null (not false)', () => {
     const sut = new ModulesObjectsModelsBitmapText({});
-    expect(sut.text).toBeNull();
+    expect(sut.text).toBeNoValue();
   });
 
   it('should default localeId to null (not false)', () => {
     const sut = new ModulesObjectsModelsBitmapText({});
-    expect(sut.localeId).toBeNull();
+    expect(sut.localeId).toBeNoValue();
   });
 
   it('should default fontName to null (not false)', () => {
     const sut = new ModulesObjectsModelsBitmapText({});
-    expect(sut.fontName).toBeNull();
+    expect(sut.fontName).toBeNoValue();
   });
 
   it('should default fontSize to null (not false)', () => {
     const sut = new ModulesObjectsModelsBitmapText({});
-    expect(sut.fontSize).toBeNull();
+    expect(sut.fontSize).toBeNoValue();
   });
 
   it('should accept text from params', () => {

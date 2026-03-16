@@ -1,0 +1,48 @@
+{"frames": [
+    {
+        "filename":  "rock.png",
+        "frame": {"x":0,"y":0,"w":16,"h":16},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+        "sourceSize": {"w":16,"h":16},
+        "pivot": {"x":0.5,"y":0.5}
+    },
+    {
+        "filename":  "brick.png",
+        "frame": {"x":16,"y":0,"w":16,"h":16},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+        "sourceSize": {"w":16,"h":16},
+        "pivot": {"x":0.5,"y":0.5}
+    },
+    {
+        "filename":  "grass.png",
+        "frame": {"x":0,"y":16,"w":16,"h":16},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+        "sourceSize": {"w":16,"h":16},
+        "pivot": {"x":0.5,"y":0.5}
+    },
+    {
+        "filename":  "lava.png",
+        "frame": {"x":16,"y":16,"w":16,"h":16},
+        "rotated": false,
+        "trimmed": false,
+        "spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+        "sourceSize": {"w":16,"h":16},
+        "pivot": {"x":0.5,"y":0.5}
+    }
+],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas1.png",
+	"format": "RGBA8888",
+	"size": {"w":32,"h":32},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a14a7528444b2bb934cf5ff977d0bf61:80e3f4aa1fad07c41c23678438819831:c957b148b34ae85d47df469bf8c2d20e$"
+}
+}

@@ -1,16 +1,5 @@
 import type { UrsoInstance, AudioCodec, SoundDoCommand, SoundsCfgData } from '../../types';
 
-declare const Urso: {
-  events: Record<string, string>;
-  logger: { error: (...args: unknown[]) => void };
-  math: { intMakeBetween: (value: number, min: number, max: number) => number };
-  localData: { get: (key: string) => Record<string, Record<string, string>> | null };
-};
-
-declare const UrsoUtils: {
-  Howler: { codecs: (codec: string) => boolean };
-};
-
 interface SoundSpriteInstance {
   updateEvents: (cfg: Record<string, Record<string, string>>) => void;
   setAllVolume: (volume: number) => void;
@@ -67,7 +56,7 @@ class ModulesSoundManagerController {
   }
 
   _setEventsHandler(): void {
-    const soundsCfg = Urso.localData.get('sounds.cfg') || {};
+    const soundsCfg = (Urso.localData.get('sounds.cfg') as Record<string, Record<string, string>> | null) || {};
 
     for (const key in this._sounds)
       if (soundsCfg[key])

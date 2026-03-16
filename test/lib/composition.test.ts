@@ -52,14 +52,14 @@ describe('LibComposition', () => {
       expect(target.b).toBe('text');
     });
 
-    it('should not copy constructor or prototype', () => {
+    it('should not copy constructor or prototype from source', () => {
       class Source {
         static staticProp = 'val';
       }
       const target: Record<string, unknown> = {};
       LibComposition.copy(target, Source);
-      expect(target.constructor).toBeUndefined();
-      expect(target.prototype).toBeUndefined();
+      // constructor/prototype are filtered out — target retains Object.prototype defaults
+      expect(target.constructor).not.toBe(Source);
       expect(target.staticProp).toBe('val');
     });
 

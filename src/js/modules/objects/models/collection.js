@@ -2,6 +2,7 @@ import ModulesObjectsBaseModel from './../baseModel';
 
 class ModulesObjectsModelsCollection extends ModulesObjectsBaseModel {
     constructor(param) {
+        super();
         this._children = param || [];
         this._setProperty = this._setProperty.bind(this);
         

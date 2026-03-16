@@ -1,3 +1,6 @@
+// Prevent config/load from assembling the entire engine namespace
+vi.mock('../../src/ts/config/load', () => ({}));
+
 describe('Index', () => {
   beforeEach(() => {
     const mockUrso = createMockUrso();

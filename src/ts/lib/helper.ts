@@ -88,10 +88,6 @@ class LibHelper {
   }
 
   public stringReplace(needle: string, replacement: string, haystack: string): string {
-    if (needle === '') {
-      return replacement + haystack.split('').join(replacement) + replacement;
-    }
-
     return haystack.split(needle).join(replacement);
   }
 
@@ -159,15 +155,9 @@ class LibHelper {
 
     const keys: string[] = typeof key === 'string' ? key.split('.') : key;
 
-    if (keys.length === 1 && keys[0] === '') return object as T;
-
     let current: unknown = object;
 
     for (const k of keys) {
-      if (current === null || current === undefined || typeof current !== 'object') {
-        return defaultResult as T;
-      }
-
       if (typeof (current as Record<string, unknown>)[k] === 'undefined') {
         return defaultResult as T;
       }

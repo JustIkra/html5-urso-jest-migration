@@ -25,20 +25,6 @@ interface PixiContainer {
   scale: { x: number; y: number };
 }
 
-declare const PIXI: {
-  Application: new () => PixiApp;
-  Container: new () => PixiContainer;
-};
-
-declare const Urso: {
-  config: { fps: { limit: number; optimizeLowPerformance: boolean }; gameContainerSelector: string };
-  events: Record<string, string>;
-  helper: { checkDeepEqual: (a: unknown, b: unknown) => boolean; mobileAndTabletCheck: () => boolean };
-  math: { intMakeBetween: (val: number, min: number, max: number) => number };
-  scenes: { timeScale: number };
-  time: { get: () => number };
-};
-
 const NORMAL_FPS_COUNT = 60;
 const LOW_PERFORMANCE_FPS_COUNT = 30;
 
@@ -84,7 +70,7 @@ class ModulesScenesPixiWrapper {
     this._root.label = 'root';
     this._createWorld();
 
-    const parent = document.querySelector(Urso.config.gameContainerSelector) || document.body;
+    const parent = document.querySelector(Urso.config.gameContainerSelector!) || document.body;
     await app.init({
       background: '0x222222',
       resolution: 1,
@@ -283,10 +269,40 @@ class ModulesScenesPixiWrapper {
     }, 16);
   }
 
+  _pointerEventHandler(event: MouseEvent | TouchEvent): void {
+    const canvas = this._app?.canvas;
+    if (!canvas) return;
+
+    let clientX: number, clientY: number;
+    if ('touches' in event && event.touches.length > 0) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    } else if ('clientX' in event) {
+      clientX = (event as MouseEvent).clientX;
+      clientY = (event as MouseEvent).clientY;
+    } else {
+      return;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    this.interaction = {
+      eventData: { data: { global: { x, y } } },
+    };
+  }
+
   _subscribeOnce(): void {
     this.addListener(
       Urso.events.EXTRA_BROWSEREVENTS_WINDOW_VISIBILITYCHANGE,
       this._visibilityChangeHandler.bind(this) as () => void,
+      true,
+    );
+
+    this.addListener(
+      Urso.events.EXTRA_BROWSEREVENTS_POINTER_EVENT,
+      this._pointerEventHandler.bind(this) as () => void,
       true,
     );
   }

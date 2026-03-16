@@ -22,12 +22,12 @@ describe('ModulesAssetsModelsContainer', () => {
 
   it('should null out key in constructor', () => {
     const sut = new ModulesAssetsModelsContainer({ key: 'someKey' });
-    expect(sut.key).toBeNull();
+    expect(sut.key).toBeNoValue();
   });
 
   it('should null out path in constructor', () => {
     const sut = new ModulesAssetsModelsContainer({ path: '/some/path' });
-    expect(sut.path).toBeNull();
+    expect(sut.path).toBeNoValue();
   });
 
   it('should default contents to empty array', () => {

@@ -1,6 +1,5 @@
 // =============================================================================
-// globals.ts -- Typed window.Urso namespace (Phase 1 only)
-// Deleted entirely in Phase 2 when all references replaced with direct imports.
+// globals.ts -- Typed window.Urso namespace
 // =============================================================================
 
 import type {
@@ -8,25 +7,35 @@ import type {
   ObserverCallback,
   TemplateTypesList,
   DeviceInstance,
+  ObjectBaseModel,
+  ConfigMainType,
+  LibCacheFacade,
+  LibLoaderFacade,
+  LibTweenFacade,
+  ObjectsControllerFacade,
+  ScenesControllerFacade,
+  TemplateControllerFacade,
+  AssetsControllerFacade,
+  StatesManagerControllerFacade,
+  TransportControllerFacade,
+  SoundManagerControllerFacade,
+  I18nControllerFacade,
+  LogicControllerFacade,
+  BrowserEventsFacade,
+  GsapTween,
+  UrsoUtilsNamespace,
+  PixiGlobal,
 } from './types';
 
-// All controller/service types don't exist in TS yet -- typed as unknown for Phase 0.
-// They will be replaced with real types as each module is converted.
-
 interface UrsoNamespace {
-  /** @deprecated Use direct import instead */
   events: typeof UrsoEvent;
 
-  /** @deprecated Use direct import instead */
   Game: Record<string, unknown>;
 
-  /** @deprecated Use direct import instead */
   Core: Record<string, unknown>;
 
-  /** @deprecated Use direct import instead */
-  config: Record<string, unknown>;
+  config: ConfigMainType;
 
-  /** @deprecated Use direct import instead */
   observer: {
     add: (eventName: string, callback: ObserverCallback, global?: boolean) => void;
     remove: (eventName: string, callback: ObserverCallback, global?: boolean) => void;
@@ -36,12 +45,11 @@ interface UrsoNamespace {
     clear: () => boolean;
   };
 
-  /** @deprecated Use direct import instead */
   helper: {
     recursiveGet: (key: string, object: unknown, defaultValue?: unknown) => unknown;
-    recursiveSet: (key: string, value: unknown, object: Record<string, unknown>) => boolean;
-    recursiveDelete: (key: string, object: Record<string, unknown>) => boolean;
-    mergeObjectsRecursive: (obj1: Record<string, unknown>, obj2: Record<string, unknown>, mergeInFirst?: boolean) => Record<string, unknown>;
+    recursiveSet: (key: string, value: unknown, object: object) => boolean;
+    recursiveDelete: (key: string, object: object) => boolean;
+    mergeObjectsRecursive: <T>(obj1: T, obj2: T, mergeInFirst?: boolean) => T;
     objectClone: (obj: unknown, recursiveCalls?: number) => unknown;
     objectApply: (from: Record<string, unknown>, to: Record<string, unknown>, recursiveCalls?: number) => void;
     objectFlip: (obj: Record<string, unknown>) => Record<string, unknown>;
@@ -63,7 +71,7 @@ interface UrsoNamespace {
     getAngleBy3Points: (p1: { x: number; y: number }, p2: { x: number; y: number }, p3: { x: number; y: number }) => number;
     getRadian: (angle: number) => number;
     getAngle: (radian: number) => number;
-    interpolate: (str: string, params: Record<string, string>) => string;
+    interpolate: (str: string, params: Record<string, unknown>) => string;
     getRGB: (color: number) => { red: number; green: number; blue: number; alpha: number };
     getColor32: (a: number, r: number, g: number, b: number) => number;
     interpolateColor32: (start: number, target: number, step: number) => number;
@@ -75,7 +83,6 @@ interface UrsoNamespace {
     waitForDomElement: (selector: string) => Promise<Element>;
   };
 
-  /** @deprecated Use direct import instead */
   logger: {
     log: (...args: unknown[]) => void;
     warn: (...args: unknown[]) => void;
@@ -83,7 +90,6 @@ interface UrsoNamespace {
     info: (...args: unknown[]) => void;
   };
 
-  /** @deprecated Use direct import instead */
   math: {
     intMakeBetween: (num: number, min: number, max: number) => number;
     getRandomInt: (max: number) => number;
@@ -98,91 +104,76 @@ interface UrsoNamespace {
     getMaxDecimalsLength: (nums: number[]) => number;
   };
 
-  /** @deprecated Use direct import instead */
-  cache: unknown;
+  cache: LibCacheFacade;
 
-  /** @deprecated Use direct import instead */
   time: {
     get: (date?: Date) => number;
     getUnixtime: (date?: Date) => number;
   };
 
-  /** @deprecated Use direct import instead */
   device: DeviceInstance;
 
-  /** @deprecated Use direct import instead */
-  objects: unknown;
+  objects: ObjectsControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  scenes: unknown;
+  scenes: ScenesControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  statesManager: unknown;
+  statesManager: StatesManagerControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  template: unknown;
+  template: TemplateControllerFacade;
 
-  /** @deprecated Use direct import instead */
   localData: {
     get: (name: string) => unknown;
     set: (key: string, value: unknown) => boolean;
   };
 
-  /** @deprecated Use direct import instead */
   types: TemplateTypesList;
 
-  /** @deprecated Use direct import instead */
-  browserEvents: unknown;
+  browserEvents: BrowserEventsFacade;
 
-  /** @deprecated Use direct import instead */
-  loader: unknown;
+  loader: LibLoaderFacade;
 
-  /** @deprecated Use direct import instead */
-  assets: unknown;
+  assets: AssetsControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  i18n: unknown;
+  i18n: I18nControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  transport: unknown;
+  transport: TransportControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  logic: unknown;
+  logic: LogicControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  soundManager: unknown;
+  soundManager: SoundManagerControllerFacade;
 
-  /** @deprecated Use direct import instead */
-  tween: unknown;
+  tween: LibTweenFacade;
 
-  /** @deprecated Use direct import instead */
-  setTimeout: (callback: () => void, delay: number) => unknown;
+  setTimeout: (callback: () => void, delay: number) => GsapTween;
 
-  /** @deprecated Use direct import instead */
-  clearTimeout: (ref: unknown) => void;
+  clearTimeout: (ref: GsapTween) => void;
 
-  /** @deprecated Use direct import instead */
   getInstance: <T = unknown>(path: string, ...args: unknown[]) => T;
 
-  /** @deprecated Use direct import instead */
   getByPath: <T = unknown>(path: string) => T;
 
-  /** @deprecated Use direct import instead */
   getInstancesModes: () => string[];
 
-  /** @deprecated Use direct import instead */
   addInstancesMode: (mode: string) => void;
 
-  /** @deprecated Use direct import instead */
-  removeInstancesMode: (mode: string) => void;
+  removeInstancesMode: (mode: string, silent?: boolean) => void;
 
-  /** @deprecated Use direct import instead */
   runGame: (config: Record<string, unknown>) => void;
+
+  find: (selector: string) => ObjectBaseModel[] | null;
+
+  findOne: (selector: string) => ObjectBaseModel | null;
+
+  findAll: (selector: string) => ObjectBaseModel[];
 }
 
 declare global {
   // eslint-disable-next-line no-var
   var Urso: UrsoNamespace;
+  // eslint-disable-next-line no-var
+  var UrsoUtils: UrsoUtilsNamespace;
+  // eslint-disable-next-line no-var
+  var PIXI: PixiGlobal;
   function log(...args: unknown[]): void;
 }
 

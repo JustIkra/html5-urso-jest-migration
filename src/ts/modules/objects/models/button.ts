@@ -46,7 +46,7 @@ class ModulesObjectsModelsButton extends ModulesObjectsBaseModel {
     super.setupParams(params);
 
     this.action = Urso.helper.recursiveGet('action', params, () => {
-      this.emit(Urso.events.MODULES_OBJECTS_BUTTON_PRESS as string, { name: this.name, class: this['class'] });
+      this.emit(Urso.events.MODULES_OBJECTS_BUTTON_PRESS, { name: this.name, class: this['class'] });
     }) as () => void;
     this.disableRightClick = Urso.helper.recursiveGet('disableRightClick', params, false) as boolean;
     this.keyDownAction = Urso.helper.recursiveGet('keyDownAction', params, null) as (() => void) | null;

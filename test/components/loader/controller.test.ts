@@ -163,11 +163,11 @@ describe('ComponentsLoaderController', () => {
       expect(spy).toHaveBeenCalledWith(0.5);
     });
 
-    it('should not call setLoadProgress when loadProgress is undefined', () => {
+    it('should call setLoadProgress even when loadProgress is undefined', () => {
       const sut = createSut();
       const spy = vi.spyOn(sut, 'setLoadProgress').mockImplementation(() => {});
       sut.loadUpdate();
-      expect(spy).not.toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith(undefined);
     });
   });
 });

@@ -28,7 +28,7 @@ describe('ModulesObjectsBaseModel', () => {
     });
 
     it('should set parent to null (not false)', () => {
-      expect(sut.parent).toBeNull();
+      expect(sut.parent).toBeNoValue();
     });
 
     it('should set proxyObject to null', () => {
@@ -40,55 +40,55 @@ describe('ModulesObjectsBaseModel', () => {
     });
 
     it('should set id to null (not false)', () => {
-      expect(sut.id).toBeNull();
+      expect(sut.id).toBeNoValue();
     });
 
     it('should set name to null (not false)', () => {
-      expect(sut.name).toBeNull();
+      expect(sut.name).toBeNoValue();
     });
 
     it('should set class to null (not false)', () => {
-      expect(sut['class']).toBeNull();
+      expect(sut['class']).toBeNoValue();
     });
 
     it('should set width to null (not false)', () => {
-      expect(sut.width).toBeNull();
+      expect(sut.width).toBeNoValue();
     });
 
     it('should set height to null (not false)', () => {
-      expect(sut.height).toBeNull();
+      expect(sut.height).toBeNoValue();
     });
 
     it('should set maxWidth to null (not false)', () => {
-      expect(sut.maxWidth).toBeNull();
+      expect(sut.maxWidth).toBeNoValue();
     });
 
     it('should set maxHeight to null (not false)', () => {
-      expect(sut.maxHeight).toBeNull();
+      expect(sut.maxHeight).toBeNoValue();
     });
 
     it('should set stretchingType to null (not false)', () => {
-      expect(sut.stretchingType).toBeNull();
+      expect(sut.stretchingType).toBeNoValue();
     });
 
     it('should set transitionDelay to null (not false)', () => {
-      expect(sut.transitionDelay).toBeNull();
+      expect(sut.transitionDelay).toBeNoValue();
     });
 
     it('should set transitionDuration to null (not false)', () => {
-      expect(sut.transitionDuration).toBeNull();
+      expect(sut.transitionDuration).toBeNoValue();
     });
 
     it('should set transitionProperty to null (not false)', () => {
-      expect(sut.transitionProperty).toBeNull();
+      expect(sut.transitionProperty).toBeNoValue();
     });
 
     it('should set _uid to null (not false)', () => {
-      expect(sut._uid).toBeNull();
+      expect(sut._uid).toBeNoValue();
     });
 
     it('should set _templatePath to null (not false)', () => {
-      expect(sut._templatePath).toBeNull();
+      expect(sut._templatePath).toBeNoValue();
     });
 
     it('should set _baseObject to null', () => {

@@ -133,7 +133,7 @@ describe('ModulesInstancesController', () => {
 
     it('should return null for a missing path', () => {
       const result = sut.getByPath('Nonexistent.Path');
-      expect(result).toBeNull();
+      expect(result).toBeNoValue();
     });
 
     it('should cache resolved classes', () => {
@@ -236,7 +236,7 @@ describe('ModulesInstancesController', () => {
 
     it('should return null for missing path', () => {
       const result = sut.getInstance('Nonexistent.Thing');
-      expect(result).toBeNull();
+      expect(result).toBeNoValue();
     });
 
     it('should inject getInstance into class prototype', () => {
@@ -401,7 +401,7 @@ describe('ModulesInstancesController', () => {
       sut.getInstance('Lib.Test3');
 
       (MockClass.prototype.emit as (...args: unknown[]) => void).call(undefined, 'event.name', { data: 1 });
-      expect(mockUrso.observer.fire).toHaveBeenCalledWith('event.name', { data: 1 }, undefined);
+      expect(mockUrso.observer.fire).toHaveBeenCalledWith('event.name', { data: 1 });
     });
   });
 });

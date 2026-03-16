@@ -1,20 +1,4 @@
-interface FpsConfig {
-  limit: number;
-  optimizeLowPerformance: boolean;
-}
-
-interface ConfigMainType {
-  title: string;
-  appVersion: number;
-  mode: string;
-  defaultLogLevel: string;
-  extendingChain: string[];
-  defaultScene: string;
-  gamePath: string;
-  useBinPath: boolean;
-  useTransport: boolean;
-  fps: FpsConfig;
-}
+import type { ConfigMainType } from '../types';
 
 const ConfigMain: ConfigMainType = {
   title: 'Urso',
@@ -33,4 +17,4 @@ const ConfigMain: ConfigMainType = {
 };
 
 export default ConfigMain;
-export type { ConfigMainType, FpsConfig };
+export type { ConfigMainType, FpsConfig } from '../types';

@@ -33,9 +33,9 @@ describe('ComponentsBaseController', () => {
       expect(sut.options).toBe(opts);
     });
 
-    it('should default options to empty object when undefined', () => {
+    it('should default options to undefined when not provided', () => {
       const sut = createSut();
-      expect(sut.options).toEqual({});
+      expect(sut.options).toBeUndefined();
     });
   });
 
@@ -79,7 +79,7 @@ describe('ComponentsBaseController', () => {
     it('should call getInstance with template name', () => {
       const sut = createSut();
       sut.assetsMount();
-      expect(sut.getInstance).toHaveBeenCalledWith('Template', {});
+      expect(sut.getInstance).toHaveBeenCalledWith('Template', undefined);
     });
   });
 

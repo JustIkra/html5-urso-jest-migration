@@ -1,9 +1,5 @@
 import type { UrsoInstance, ComponentCommon } from '../../types';
 
-declare const Urso: {
-  logger: { error: (...args: unknown[]) => void };
-};
-
 interface TemplateResult {
   styles: Record<string, unknown>;
   assets: unknown[];
@@ -13,7 +9,7 @@ interface TemplateResult {
 export default class ComponentsBaseController {
   protected _templateName = 'Template';
   public common: ComponentCommon;
-  public options: Record<string, unknown>;
+  public options: Record<string, unknown> | undefined;
 
   public getInstance!: UrsoInstance['getInstance'];
   public addListener!: UrsoInstance['addListener'];
@@ -30,7 +26,7 @@ export default class ComponentsBaseController {
       object: null,
     };
 
-    this.options = options || {};
+    this.options = options;
   }
 
   _requiredOptionsModel(): Record<string, string> | undefined {

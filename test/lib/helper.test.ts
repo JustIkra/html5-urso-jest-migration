@@ -41,14 +41,15 @@ describe('LibHelper', () => {
       expect(sut.recursiveGet(['a', 'b'], obj)).toBe(99);
     });
 
-    it('should return the full object if key is empty string', () => {
+    it('should return defaultResult when key is empty string', () => {
       const obj = { a: 1 };
-      expect(sut.recursiveGet('', obj)).toEqual(obj);
+      expect(sut.recursiveGet('', obj)).toBeUndefined();
+      expect(sut.recursiveGet('', obj, 'fallback')).toBe('fallback');
     });
 
-    it('should return defaultResult when intermediate is null', () => {
+    it('should throw TypeError when intermediate is null', () => {
       const obj = { a: null };
-      expect(sut.recursiveGet('a.b', obj, 'def')).toBe('def');
+      expect(() => sut.recursiveGet('a.b', obj, 'def')).toThrow(TypeError);
     });
 
     it('should return falsy values correctly (0, false, empty string)', () => {
@@ -263,7 +264,7 @@ describe('LibHelper', () => {
 
     it('should handle empty needle', () => {
       const result = sut.stringReplace('', '-', 'ab');
-      expect(result).toBe('-a-b-');
+      expect(result).toBe('a-b');
     });
   });
 

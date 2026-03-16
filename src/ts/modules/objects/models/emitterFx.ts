@@ -113,7 +113,7 @@ class ModulesObjectsModelsEmitterFx extends ModulesObjectsBaseModel {
 
   public _subscribeOnce(): void {
     this.addListener(
-      Urso.events.MODULES_SCENES_UPDATE as string,
+      Urso.events.MODULES_SCENES_UPDATE,
       this.update as ObserverCallback,
       true,
     );
@@ -121,7 +121,7 @@ class ModulesObjectsModelsEmitterFx extends ModulesObjectsBaseModel {
 
   protected _customDestroy(): void {
     this.removeListener(
-      Urso.events.MODULES_SCENES_UPDATE as string,
+      Urso.events.MODULES_SCENES_UPDATE,
       this.update as ObserverCallback,
     );
     if (this._emitter) {

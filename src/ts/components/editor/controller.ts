@@ -1,12 +1,6 @@
 import ComponentsBaseController from '../base/controller';
 import type ComponentsEditorApi from './api';
 
-declare const Urso: {
-  helper: {
-    recursiveSet: (path: string, value: unknown, target: unknown) => boolean;
-  };
-};
-
 class ComponentsEditorController extends ComponentsBaseController {
   private _api: ComponentsEditorApi;
 

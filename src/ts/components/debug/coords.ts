@@ -1,9 +1,5 @@
 import type { ComponentCommon } from '../../types';
 
-declare const Urso: {
-  scenes: { getMouseCoords: () => { x: number; y: number } };
-};
-
 interface TextObject {
   text: string;
 }

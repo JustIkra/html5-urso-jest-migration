@@ -1,9 +1,5 @@
 import type { UrsoInstance } from '../../types';
 
-declare const Urso: {
-  events: Record<string, string>;
-};
-
 interface VendorDocument extends Document {
   webkitIsFullScreen?: boolean;
   mozFullScreen?: boolean;

@@ -22,7 +22,7 @@ describe('ModulesObserverEvents', () => {
   });
 
   it('should have all keys and values matching the UrsoEvent enum', () => {
-    expect(sut.list).toBe(UrsoEvent);
+    expect(sut.list).toEqual(UrsoEvent);
   });
 
   it('should have no duplicate values', () => {

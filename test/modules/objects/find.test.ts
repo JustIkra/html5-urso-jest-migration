@@ -82,7 +82,7 @@ describe('ModulesObjectsFind', () => {
       mockCache.getId.mockReturnValue(null);
 
       const result = sut.do('#missing');
-      expect(result).toBeNull();
+      expect(result).toBeNoValue();
     });
   });
 
@@ -115,7 +115,7 @@ describe('ModulesObjectsFind', () => {
       mockCache.getClass.mockReturnValue(null);
 
       const result = sut.do('.missing');
-      expect(result).toBeNull();
+      expect(result).toBeNoValue();
     });
 
     it('should return empty array when class returns empty array', () => {
@@ -123,7 +123,7 @@ describe('ModulesObjectsFind', () => {
       mockCache.getClass.mockReturnValue([]);
 
       const result = sut.do('.empty');
-      expect(result).toBeNull();
+      expect(result).toBeNoValue();
     });
   });
 
